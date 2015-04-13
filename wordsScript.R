@@ -185,7 +185,8 @@ textIsCity<-function(textOfPage){
 }
 
 nameIsCity<-function(titleOfPage){
-  grepl("Wikivoyage",titleOfPage)
+  a<-! (grepl("Wikivoyage",titleOfPage))
+  a
 }
 
 getCityTextTable<-function(xml_root){
