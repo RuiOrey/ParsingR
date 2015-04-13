@@ -168,7 +168,7 @@ searchXMLSite<-function(xml_data,index_site,index_sub){
 }
   
 getXmlRoot<-function(file="enwikivoyage-latest-pages-articles.xml"){
-  xml<-xmlParse()
+  xml<-xmlParse(file)
   xmlRoot(xml)
 }
 
@@ -180,17 +180,22 @@ getTextOfPage<-function(xml_root,index){
   xmlValue(xml_root[[index]][[4]][[8]])
 }
 
+#the next 2 functions are to set parameters to filter text
 textIsCity<-function(textOfPage){
-  grepl("usablecity",textOfPage)
+  #grepl("usablecity",textOfPage)
+  !is.na(textOfPage) && (nchar(textOfPage)>100)
 }
 
 nameIsCity<-function(titleOfPage){
   a<-! (grepl("Wikivoyage",titleOfPage))
+  a<-! (grepl(":",titleOfPage))
   a
 }
 
 getCityTextTable<-function(xml_root){
   require("data.table")
+  load_libraries()
+  stop1<-read.csv("stopwords.csv",header = F,sep = "")
   
   cities=c()
   text=c()
@@ -199,6 +204,14 @@ getCityTextTable<-function(xml_root){
     txt<-getTextOfPage(xml_root,i)
     city<-getTitleOfPage(xml_root,i)
     if (textIsCity(txt) && nameIsCity(city)){
+      txt <- gsub('\\t', '', txt)
+      txt <- gsub('\\n', '', txt)
+      txt <- stripWhitespace(txt)
+      txt <- tolower(txt)
+      txt <- removeWords(txt, stopwords('english'))
+      txt <- removeWords(txt, as.character(stop1[[1]]))
+      txt <- removeNumbers(txt)
+      txt <- removePunctuation(txt)
       text<-c(text,txt)
       
       cities<-c(cities,city)
@@ -209,18 +222,34 @@ getCityTextTable<-function(xml_root){
   DT
 }
 
+#main function to get the xml table (does all the work, read, filter, parse and save)
 readXMLandGetDataTable<-function(){
-  a<- getXMLRoot()
-  b<-getCityTable(a)
+  require("XML")
+  a<- getXmlRoot()
+  b<-getCityTextTable(a)
   b
 }
 
-
-#  xml_root[[2]][[6]] gets the second node and sixth element
+find_words_xml<-function(a){
+  docs<-a$text
+  stop1<-read.csv("stopwords.csv",header = F,sep = "")
   
-
-
-  #else{
-  #capitals
-  #}
-
+  chinaRemove <- grep("docs", iconv(docs, "latin1", "ASCII", sub="docs"))
+  
+  
+  corpus <- Corpus(VectorSource(docs))
+  corpus <- tm_map(corpus, removeWords, stopwords("english"))
+  corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
+  corpus <- tm_map(corpus, removeWords, chinaRemove)
+  
+  #corpus[[1]] <- stemDocument(corpus[[1]])
+  #print(corpus)
+  dtm <- DocumentTermMatrix(corpus)
+  tfidf <- weightTfIdf(dtm,normalize = TRUE)
+  m <- as.matrix(tfidf)
+  #print(m)
+  
+  rownames(m) <- a$name
+  m
+  
+}
