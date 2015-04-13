@@ -165,8 +165,59 @@ searchXMLSite<-function(xml_data,index_site,index_sub){
   for(i in 1:51573){
     a<-c(a,xml_data[[i]][[1]])
   }
-  
 }
+  
+getXmlRoot<-function(file="enwikivoyage-latest-pages-articles.xml"){
+  xml<-xmlParse()
+  xmlRoot(xml)
+}
+
+getTitleOfPage<-function(xml_root,index){
+  xmlValue(xml_root[[index]][[1]])
+}
+# it seems cities have {{usablecity}} in their text
+getTextOfPage<-function(xml_root,index){
+  xmlValue(xml_root[[index]][[4]][[8]])
+}
+
+textIsCity<-function(textOfPage){
+  grepl("usablecity",textOfPage)
+}
+
+nameIsCity<-function(titleOfPage){
+  grepl("Wikivoyage",titleOfPage)
+}
+
+getCityTextTable<-function(xml_root){
+  require("data.table")
+  
+  cities=c()
+  text=c()
+  xsize<-xmlSize(xml_root)
+  for (i in 1:xsize){
+    txt<-getTextOfPage(xml_root,i)
+    city<-getTitleOfPage(xml_root,i)
+    if (textIsCity(txt) && nameIsCity(city)){
+      text<-c(text,txt)
+      
+      cities<-c(cities,city)
+      print(city)
+      }
+  }
+  DT=data.table(name=cities,text=text)
+  DT
+}
+
+readXMLandGetDataTable<-function(){
+  a<- getXMLRoot()
+  b<-getCityTable(a)
+  b
+}
+
+
+#  xml_root[[2]][[6]] gets the second node and sixth element
+  
+
 
   #else{
   #capitals
