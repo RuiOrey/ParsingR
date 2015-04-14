@@ -12,7 +12,7 @@ ui <- fluidPage(
   sidebarLayout(
     # Sidebar with a slider and selection inputs
     sidebarPanel(
-      textInput("word", "Choose a book:", ""),
+      textInput("word", "Keyword:", ""),
       actionButton("update", "Change"),
       hr(),
       sliderInput("freq",
@@ -40,7 +40,7 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$plot <- renderPlot({
-	  wordcloud_category(wiki, input$word)
+	  wordcloud_category(filteredWikivoyage, input$word)
   })
 }
 
