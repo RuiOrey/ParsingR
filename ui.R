@@ -2,6 +2,11 @@
 
 library(shiny)
 
+source('wordsScript.R')
+load('Image.RData')
+
+
+
 
 
 
@@ -46,6 +51,4 @@ server <- function(input, output) {
 
 
 
-source('wordsScript.R')
-load('Image.RData')
 runApp(shinyApp(ui, server))

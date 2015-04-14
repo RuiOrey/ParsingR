@@ -153,7 +153,11 @@ wordcloud_city<-function(wiki,city,max=100){
 
 wordcloud_category<-function(wiki,word,max=100){
   require("wordcloud")
-  wordcloud(names(wiki[,word]),wiki[,word],scale=c(4,.5),min.freq = 5,max.words = max,colors=brewer.pal(8,"Dark2"),random.order = F,main="title")
+print(max)
+  wordcloud(names(wiki[,word]),wiki[,word],
+  #scale=c(4,.5),
+  #min.freq = 5,
+  max.words = max)
 }
 
 
