@@ -153,7 +153,7 @@ wordcloud_city<-function(wiki,city,max=100){
 
 wordcloud_category<-function(wiki,word,max=100){
   require("wordcloud")
-  wordcloud(names(wiki[,word]),wiki[,word],scale=c(10,1),min.freq = 5,max.words = max,colors=brewer.pal(8,"Dark2"),random.order = F,main="title")
+  wordcloud(names(wiki[,word]),wiki[,word],scale=c(4,.5),min.freq = 5,max.words = max,colors=brewer.pal(8,"Dark2"),random.order = F,main="title")
 }
 
 
@@ -183,7 +183,7 @@ getTextOfPage<-function(xml_root,index){
 #the next 2 functions are to set parameters to filter text
 textIsCity<-function(textOfPage){
   #grepl("usablecity",textOfPage)
-  !is.na(textOfPage) && (nchar(textOfPage)>100)
+  !is.na(textOfPage) && (nchar(textOfPage)>100) && grepl("usablecity",textOfPage)
 }
 
 nameIsCity<-function(titleOfPage){
@@ -246,10 +246,21 @@ find_words_xml<-function(a){
   #print(corpus)
   dtm <- DocumentTermMatrix(corpus)
   tfidf <- weightTfIdf(dtm,normalize = TRUE)
-  m <- as.matrix(tfidf)
-  #print(m)
+ 
   
-  rownames(m) <- a$name
-  m
+  tfidf
+  #m <- as.matrix(tfidf)
+  #rownames(m) <- a$name
+  #m
   
 }
+
+
+#  xml_root[[2]][[6]] gets the second node and sixth element
+  
+
+
+  #else{
+  #capitals
+  #}
+
