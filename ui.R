@@ -1,16 +1,6 @@
-# app.R
-
 library(shiny)
 
-source('wordsScript.R')
-load('Image.RData')
-
-
-
-
-
-
-ui <- fluidPage(
+shinyUI(fluidPage(
   # Application title
   titlePanel("Word Cloud"),
 
@@ -29,26 +19,4 @@ ui <- fluidPage(
     )
   )
 )
-
-
-
-
-
-
-
-
-
-server <- function(input, output) {
-  output$plot <- renderPlot({
-	  wordcloud_category(filteredWikivoyage, input$word, input$max)
-  })
-}
-
-
-
-
-
-
-
-
-runApp(shinyApp(ui, server))
+)

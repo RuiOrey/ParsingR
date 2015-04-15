@@ -8,6 +8,8 @@ load_libraries<-function(){
   
 }
 
+load_libraries()
+
 find_words <-function (number=1) {
   require ("XML")
   require ("RCurl")
