@@ -33,5 +33,5 @@ procura <- function(keywords, max=20)
 	n <- colnames(m)[o]
 
 	library(wordcloud)
-	wordcloud(n, w, max=input$max)
+	wordcloud(n, w, max=max)
 }
