@@ -15,6 +15,7 @@
 
 \usepackage{amsmath}
 \newcommand{\norm}[1]{\lvert #1 \rvert}
+\usepackage{tabularx}
 
 \begin{document}
 
@@ -37,38 +38,54 @@ No nosso caso, pensamos usar como ``documentos'', as várias páginas da, de in�
 \end{tabular}
 \end{center}
 
+\section{Tratamento do Texto}
+
+A definição de palavra é qualquer texto separado por um espaço ou mudança de linha, portanto uma palavra pode incluir pontuação. Um vez que algumas palavras são iguais (i.e. ``Praia'', com maiúscula no início duma frase é igual a ``praia'' em minúsculas, assim como ``praia.'' com ponto final, no final duma frase, é igual a ``praia'') é feito algum tratamento a esta lista de ``palavras''. Alguns dos métodos, disponibilizados, por exemplo, pelo pacote \texttt{tm} são, para cada palavra:
+
+\begin{itemize}
+\item pôr tudo em minúsculas;
+\item remover palavras com números;
+\item remover pontuação;
+\item remover ``stop-words'' --- uma blacklist muito usado com palavras comuns, como artigos ``the'' e ``and'';
+\item fazer ``stemming'' --- isto é, usar regras de gramática regular, para retirar gerúndios (em inglês, surf\textbf{ing}) ou plurais (beach\textbf{es});
+\item remover símbolos --- no nosso caso o texto usa poucos símbolos seja como for;
+\item remover palavras de língua estrangeira --- estamos a remover todas as letras que não poderem ser representadas pelas tabelas ascii e latin1.
+\end{itemize}
+
+\section{Transformações à Matriz}
+
 Normalmente, aplica-se uma transformação local a estes valores. Uma transformação local é ir, um a um, e aplicar-lhes uma função. Por exemplo, se o documento A for 5 vezes mais pequeno que o documento B, não quer dizer que o termo C aparecer mais vezes no documento B signifique que este é mais significativo. O texto em si é mais pequeno. Nestes casos, por vezes usa-se uma transformação local binária: ou seja, transforma-se em 1 se $> 0$, ou 0 se 0.
 
 Nós usamos a função TF (term frequency), ou seja, não aplicamos nenhuma transformação local. Outras transformações possíveis, para um termo $i$ dado um documento $j$:
 
 \noindent
 \begin{center}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{0.75\linewidth}{|l|X|}
 \hline
-	Binária & $l_{ij}=1$ se existir termo, ou $0$ senão \\\hline
+	Binária & $l_{ij}=1$ se existir termo, ou $0$ caso contrário \\\hline
 	TF & $l_{ij}=\mathrm{tf}_{ij}$ \\\hline
 	Log & $l_{ij}=\log(\mathrm{tf}_{ij}+1)$ \\\hline
 	Augnorm & $l_{ij}=\frac{\frac{\mathrm{tf}_{ij}}{\max_i(\mathrm{tf}_{ij})}+1}{2}$ \\\hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
-Para além desta transformação local (que não olha para os outros valores da matriz, é uma transformação de elemento-a-elemento) também é costume pensar-se numa transformação global. A ideia é que ao comparar documentos (ou quando um utilizador procura por vários termos), ou quando queremos dizer quais os termos mais relevantes para um dado documento, não queremos dar o mesmo peso a palavras genéricas como ``praia'' que damos a termos mais específicos como ``surf''. Se ``praia'' ocorre em muitos destinos, e ``surf'' em apenas alguns, então queremos que estes destinos de ``surf'' sejam mais semelhantes que os de ``praia''.
+Para além desta transformação local (que não olha para os outros valores da matriz, é uma transformação de elemento-a-elemento) também é costume pensar-se numa transformação global (que se aplica a toda a coluna). A ideia é que ao comparar documentos (ou quando um utilizador procura por vários termos), ou quando queremos dizer quais os termos mais relevantes para um dado documento, não queremos dar o mesmo peso a palavras genéricas como ``praia'' que damos a termos mais específicos como ``surf''. Se ``praia'' ocorre em muitos destinos, e ``surf'' em apenas alguns, então queremos que estes destinos de ``surf'' sejam mais semelhantes que os de ``praia''.
 
 Nós usamos a função Idf. Outras seguem. Notação: $\mathrm{gf}_i$ denota o número de vezes que o termo $i$ ocorre em todos os documentos, e $\mathrm{df}_i$ é o número de documentos em que o termo $i$ ocorre. Na entropia, $p_{ij}=\frac{\mathrm{tf}_{ij}}{\mathrm{gf}_i}$.
 
 \noindent
 \begin{center}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{0.75\linewidth}{|l|X|}
 \hline
 	Binária & $g_i=1$ \\\hline
 	Normal & $g_i=\frac{1}{\sqrt{\sum_j\mathrm{tf}_{ij}^2}}$ \\\hline
 	GfIdf & $g_i=\mathrm{gf}_i/\mathrm{df}_i$ \\\hline
 	Idf & $g_i=\log_2 \frac{n}{1+\mathrm{df}_i}$ \\\hline
 	Entropia & $g_i=1+\sum_j \frac{p_{ij}\log p_{ij}}{\log n}$ \\\hline
-\end{tabular}
+\end{tabularx}
 \end{center}
 
-No final, então a matriz documento-termo é computada com o produto da transformação local e da global: $l_{ij} \times g_i$. Por exemplo, no caso da transformação TF-IDF podemos ver cada documento como sendo um vector ao longo dos termos, chama-se a uso de modelo espacial de termos:
+No final, na matriz documento-termo, cada elemento é computado como sendo o produto da transformação local do elemento e da transformação global da coluna: $l_{ij} \times g_i$. Por exemplo, no caso da transformação TF-IDF podemos ver cada documento como sendo um vector ao longo dos termos, chama-se a isso de modelar o texto num espaço vectorial:
 
 \noindent
 \begin{center}
@@ -81,11 +98,13 @@ No final, então a matriz documento-termo é computada com o produto da transfor
 \end{tabular}
 \end{center}
 
+Toda e qualquer transformação à matriz documento-termo deve ser posteriormente aplicada também às pesquisas, como elaborado na secção \ref{query}.
+
 \section{Redução dos dados}
 
-Uma técnica de redução de dados, que ainda não usamos, é a de eliminar termos que ocorrem poucas vezes, ou em demasiados documentos.
+Uma técnica de redução de dados, que ainda não usamos, é a de eliminar termos que ocorrem poucas vezes, ue sejam ``esparsos'', ou em demasiados documentos (demasiado comuns).
 
-Também é feito em text mining muito uso de matrizes esparsas, uma vez que há muitos casos de zeros. São técnicas em que não são guardados todos os elementos zero, mas informações como ``os próximos 30 elementos são zeros''.
+Também é feito em text mining muito uso de matrizes esparsas, uma vez que há muitos casos de zeros. São técnicas em que a matriz internamente é guardada como, por exemplo, uma lista de tuplos: (valor, linha, coluna), onde tudo o que não está na lista se assume ser zero. A abordagem tradicional ocupa $\mathrm{M}\times\mathrm{N}$ de espaço, enquanto este método de matriz esparsa em específico ocupa $\mathrm{M}\times3k$, onde $k$ são todos os valores diferentes de zero; para este método, justifica-se usar matriz esparsa sempre que os elementos zero forem mais que um terço da matriz.
 
 \section{Transformação Semântica}
 
@@ -98,6 +117,7 @@ Até aqui foi uma explicação muito por alto do PCA. No caso do LSA, a ideia é
 Usando esta técnica de compressão, o algoritmo LSA identifica de que forma é que os termos são semelhantes; desta forma resolve dois problemas num só: o problema de pesquisar usando sinónimos, e o problema de pesquisar usando homógrafos (palavras iguais mas com significados diferentes).
 
 \section{Pesquisar por termos}
+\label{query}
 
 Normalmente são usadas abordagens muito semelhantes ao comparar documentos e ao pesquisar por termos, porque no fundo é a mesma coisa. Perguntar quais cidades são parecidas com o Porto é o mesmo que perguntar em quais se produz vinho, se fala Português, se come tripas, etc. Para todos os propósitos, quando o utilizador procura por uma série de termos é o mesmo que efectivamente inserir estes termos como um ``destino'' na matriz e comparar com os outros destinos na matriz. Devemos portanto aplicar as mesmas transformações à pesquisa do utilizador, que aplicamos aos destinos, e depois compará-los com os destinos na nossa matriz, usando algum critério de semelhança.
 
