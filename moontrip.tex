@@ -52,6 +52,8 @@ A definição de palavra é qualquer texto separado por um espaço ou mudança d
 \item remover palavras de língua estrangeira --- estamos a remover todas as letras que não poderem ser representadas pelas tabelas ascii e latin1.
 \end{itemize}
 
+O pacote \texttt{lsa}, que usamos para a transformação semântica, ver seccção \ref{semantica}, tem funções alternativas para todo o pacote \texttt{tm}. Podemos usá-los exclusivamente, como estamos a fazer no branch ``futuro'' (apenas \texttt{lsa}), ou podemos combinar os dois, usando o \texttt{tm} para esta parte da matriz documento-termo, uma vez que ele oferece mais funcionalidades, e depois exportando para um formato que possa ser usado pelo pacote \texttt{lsa}.
+
 \section{Transformações à Matriz}
 
 Normalmente, aplica-se uma transformação local a estes valores. Uma transformação local é ir, um a um, e aplicar-lhes uma função. Por exemplo, se o documento A for 5 vezes mais pequeno que o documento B, não quer dizer que o termo C aparecer mais vezes no documento B signifique que este é mais significativo. O texto em si é mais pequeno. Nestes casos, por vezes usa-se uma transformação local binária: ou seja, transforma-se em 1 se $> 0$, ou 0 se 0.
@@ -107,6 +109,7 @@ Uma técnica de redução de dados, que ainda não usamos, é a de eliminar term
 Também é feito em text mining muito uso de matrizes esparsas, uma vez que há muitos casos de zeros. São técnicas em que a matriz internamente é guardada como, por exemplo, uma lista de tuplos: (valor, linha, coluna), onde tudo o que não está na lista se assume ser zero. A abordagem tradicional ocupa $\mathrm{M}\times\mathrm{N}$ de espaço, enquanto este método de matriz esparsa em específico ocupa $\mathrm{M}\times3k$, onde $k$ são todos os valores diferentes de zero; para este método, justifica-se usar matriz esparsa sempre que os elementos zero forem mais que um terço da matriz.
 
 \section{Transformação Semântica}
+\label{semantica}
 
 Para além da transformação local e global, é comum também fazer-se uma chamada transformação semântica (LSA). A ideia é baseada nos algoritmos de compressão, em particular no PCA. Se sabemos que sempre que alguém diz que ``chove'' então ``cai água'', podemos condensar esta informação no nosso cérebro como ``chuva''=``cair água''. Da mesma forma, numa amostra do clima, se sabemos que sempre que chove então em 5\% dos casos há arco-íris, então se nos interessa apenas voltar a reproduzir o histograma dessa amostra, podemos esquecer os casos em que houve arco-íris e guardar apenas a informação ``chuva''=5\% arco-íris.
 
