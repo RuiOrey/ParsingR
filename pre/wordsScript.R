@@ -1,5 +1,5 @@
 load_libraries<-function(){
-  require("bigmemory")
+#  require("bigmemory")
   require ("XML")
   require ("RCurl")
   require ("tm")
