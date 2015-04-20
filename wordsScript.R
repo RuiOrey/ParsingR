@@ -189,7 +189,8 @@ getTextOfPage<-function(xml_root,index){
 #the next 2 functions are to set parameters to filter text
 textIsCity<-function(textOfPage){
   #grepl("usablecity",textOfPage)
-  !is.na(textOfPage) && (nchar(textOfPage)>100) && grepl("usablecity",textOfPage)
+  #!is.na(textOfPage) && (nchar(textOfPage)>100) && grepl("usablecity",textOfPage)
+  !is.na(textOfPage) && (nchar(textOfPage)>100) 
 }
 
 nameIsCity<-function(titleOfPage){
@@ -197,6 +198,33 @@ nameIsCity<-function(titleOfPage){
   a<-! (grepl(":",titleOfPage))
   a
 }
+
+
+find_words_xml<-function(a){
+  docs<-a$text
+  stop1<-read.csv("stopwords.csv",header = F,sep = "")
+  
+  chinaRemove <- grep("docs", iconv(docs, "latin1", "ASCII", sub="docs"))
+  
+  
+  corpus <- Corpus(VectorSource(docs))
+  corpus <- tm_map(corpus, removeWords, stopwords("english"))
+  corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
+  corpus <- tm_map(corpus, removeWords, chinaRemove)
+  
+  #corpus[[1]] <- stemDocument(corpus[[1]])
+  #print(corpus)
+  dtm <- DocumentTermMatrix(corpus)
+  tfidf <- weightTfIdf(dtm,normalize = TRUE)
+ 
+  
+  tfidf
+  #m <- as.matrix(tfidf)
+  #rownames(m) <- a$name
+  #m
+  
+}
+
 
 getCityTextTable<-function(xml_root){
   require("data.table")
@@ -236,37 +264,15 @@ readXMLandGetDataTable<-function(){
   b
 }
 
-find_words_xml<-function(a){
-  docs<-a$text
-  stop1<-read.csv("stopwords.csv",header = F,sep = "")
-  
-  chinaRemove <- grep("docs", iconv(docs, "latin1", "ASCII", sub="docs"))
-  
-  
-  corpus <- Corpus(VectorSource(docs))
-  corpus <- tm_map(corpus, removeWords, stopwords("english"))
-  corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
-  corpus <- tm_map(corpus, removeWords, chinaRemove)
-  
-  #corpus[[1]] <- stemDocument(corpus[[1]])
-  #print(corpus)
-  dtm <- DocumentTermMatrix(corpus)
-  tfidf <- weightTfIdf(dtm,normalize = TRUE)
- 
-  
-  tfidf
-  #m <- as.matrix(tfidf)
-  #rownames(m) <- a$name
-  #m
-  
+#runs the process and returns the filtered destination/keyword score table
+getDestinationsKeywords<-function(){
+a<-1
+b<-2
+xmlRawDataTable<-readXMLandGetDataTable()
+xmlCorpusScores<-find_words_xml(xmlRawDataTable)
+keywords<-bake_results(xmlCorpusScores)
+filteredDestinationsKeywords<-filterSiteByKeywords(xmlCorpusScores,keywords,100)
+
 }
-
-
-#  xml_root[[2]][[6]] gets the second node and sixth element
   
-
-
-  #else{
-  #capitals
-  #}
 
