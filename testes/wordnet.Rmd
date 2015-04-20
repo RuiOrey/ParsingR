@@ -1,0 +1,115 @@
+Moontrip: Testes `wordnet`
+==========================================
+
+Para compilar este documento, correr em R:
+
+```{r, eval=FALSE}
+library(knitr)
+knit2html('wordnet.Rmd')
+```
+
+Para instalar `wordnet`, correr:
+
+* no Ubuntu: `sudo apt-get install wordnet-base`
+* depois no R: `install.packages('wordnet')`
+
+Vamos definir a seguinte função para, dada uma palavra e um tipo de relação que queremos encontrar, pesquisar por quais palavras estão relacionadas dessas forma:
+
+```{r}
+relacionadas <- function(palavra, tipo='NOUN', relacao='&')
+{
+	library('wordnet')
+	filter <- getTermFilter('ExactMatchFilter', palavra, TRUE)
+	terms <- getIndexTerms(tipo, 1, filter)
+	synsets <- getSynsets(terms[[1]])
+	related <- tryCatch(
+		getRelatedSynsets(synsets[[1]], relacao),
+		error=function(condition) NULL
+	)
+	if (is.null(related))
+		return(NULL)
+	sapply(related, getWord)
+}
+```
+
+Para tipo usar um dos:
+
+* **`NOUN`**
+* **`VERB`**
+* **`ADJECTIVE`**
+* **`ADVERB`**
+
+Para as relações possíveis ver na documentação do `wordnet`, [secção WordNet Searches][link1]
+
+[link1]: http://wordnet.princeton.edu/man/wnsearch.3WN.html#sect4
+
+Para ganharmos alguma sensibilidade sobre qual o tipo de relações que estão disponíveis, vamos definir a seguinte função:
+
+```{r}
+s <- c('!','@',' ','*','&','#m','#s','#p','%m','%s','%p','%','#','>','<','^','\\','\\=','$','+',';','-',';c',';u',';r','-c','-u','-r','@i','i')
+
+st <- c('antonyms','hypernyms','hyponyms','entailment','similar','member meronym','substance meronym','part meronym','member holonym','substance holonym','part holonym','all meronyms','all holonyms','cause','participle of verb','also see','pertains to noun or derived from adjective','attribute','verb group','derivationally related form','domain of synset','member of this domain','show domain topic','show domain usage','show domain region','show domain terms for topic','show domain terms for usage','show domain terms for region','instance of','show instances')
+
+relacoes <- function(palavra, tipo='NOUN')
+{
+	for(i in 1:length(s)) {
+		ws <- relacionadas(palavra, tipo, s[i])
+		if(!is.null(ws)) {
+			print('')
+			print(paste('**', toupper(st[i])))
+			print(str(ws))
+		}
+	}
+}
+```
+
+Podemos começar assim a fazer alguns testes:
+
+```{r}
+relacoes('surf')
+```
+
+Temos portanto hiperónimos e surfboard como palavra relacionada. Talvez interessante para dizer ao utilizador: será que quer surfboard, de forma a ajudar a ser mais específico. Mas nada que agrupe como desporto, por exemplo.
+
+```{r}
+relacoes('sport')
+```
+
+Aqui está cortado, mas este já tem como "termos de domínio por tópico", o "surf". Às tantas, se quisermos por alguma razão saber o grupo maior duma palavra teremos que fazer alguma ginástica, começando com algumas categorias raíz e tentando derivá-la daí.
+
+```{r}
+relacoes('tennis')
+```
+
+Nada sobre ping-pong. :P
+
+```{r}
+relacoes('ski')
+```
+
+Muito pobre.
+
+```{r}
+relacoes('wine')
+```
+
+```{r}
+relacoes('food')
+```
+
+```{r}
+relacoes('sex')
+```
+
+Nada que defina tipos tipos de *sex*, nomeadamente:
+
+```{r}
+relacoes('masochism')
+```
+
+Mais uma vez, não agrupa na categoria pai de "sex".
+
+Outros pensamentos
+-------------------------------------
+
+Caso o "stemming" também nos funcione mal, podemos considerar o wordnet para isso. Também poderá talvez ser usado para inferir emoções da página, uma vez que apenas queremos destinos "positivos". Por exemplo, uma página pode referir muitas vezes a palavra *gay*, mas de forma negativa, e não a queremos então recomendar.

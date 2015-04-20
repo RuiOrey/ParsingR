@@ -1,11 +1,12 @@
-# ParsingR
+ParsingR
+======================================
 
-Para ler no R os datasets, escrever:
+Estrutura do código
+--------------------------------------
 
--load("Image.RData")
+* **pre/** código de pré-processamento com base na wikivoyage; gera ficheiros Rdata para serem depois importados rapidamente
+* **shiny/** interface web
+* **futuro/** temporário: deverá ser juntado com os outros dois
+* **testes/** alguns testes
 
--source("wordsScript.R")
-
-
-no R tem uma variavel que é o wikivoyageSite (dados do site todas as paginas Xml raw) 
-
+O ficheiro moontrip.tex explica a teoria que estamos a usar.
