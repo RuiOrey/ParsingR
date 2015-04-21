@@ -221,14 +221,24 @@ find_words_xml<-function(a){
   corpus <- tm_map(corpus, removeWords, stopwords("english"))
   corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
   corpus <- tm_map(corpus, removeWords, chinaRemove)
-  corpus <- tm_map(corpus, PlainTextDocument3)
+
+  corpus <- tm_map(corpus, content_transformer(tolower))
+  corpus <- tm_map(corpus, content_transformer(stri_trans_tolower))
+  corpus <- tm_map(corpus, content_transformer(removePunctuation))
+  corpus <- tm_map(corpus, content_transformer(removeNumbers))
+  corpus.copy<-corpus
+  corpus <- tm_map(corpus, content_transformer(stemDocument))
+  corpus <- tm_map(corpus, stemCompletion,dictionary=corpus.copy)
+  corpus <- tm_map(corpus, PlainTextDocument)
   #corpus[[1]] <- stemDocument(corpus[[1]])
   #print(corpus)
   print("Filtered. Converting in dtm...")
-  dtm <- DocumentTermMatrix(corpus)
-  print("Dtm done. Tfidf...")
+  dtm <- DocumentTermMatrix(corpus,control=list(wordLengths=c(2,Inf)))
+  
   #testing
+  print("Removing sparse terms...")
   dtm <- removeSparseTerms(x = dtm, sparse = 0.9)
+  print("Dtm done. Tfidf...")
   tfidf <- weightTfIdf(dtm,normalize = TRUE)
 
    print("Converting tfidf to matrix.")
