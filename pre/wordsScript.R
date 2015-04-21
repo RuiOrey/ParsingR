@@ -223,33 +223,43 @@ find_words_xml<-function(a){
   corpus <- tm_map(corpus, removeWords, chinaRemove)
 
   corpus <- tm_map(corpus, content_transformer(tolower))
-  corpus <- tm_map(corpus, content_transformer(stri_trans_tolower))
+  #corpus <- tm_map(corpus, content_transformer(stri_trans_tolower))
   corpus <- tm_map(corpus, content_transformer(removePunctuation))
   corpus <- tm_map(corpus, content_transformer(removeNumbers))
-  corpus.copy<-corpus
-  corpus <- tm_map(corpus, content_transformer(stemDocument))
-  corpus <- tm_map(corpus, stemCompletion,dictionary=corpus.copy)
+  
+  #corpus.copy<-corpus
+  #corpus <- tm_map(corpus, content_transformer(stemDocument))
+  #corpus <- tm_map(corpus, stemCompletion,dictionary=corpus.copy)
+  
   corpus <- tm_map(corpus, PlainTextDocument)
   #corpus[[1]] <- stemDocument(corpus[[1]])
   #print(corpus)
   print("Filtered. Converting in dtm...")
-  dtm <- DocumentTermMatrix(corpus,control=list(wordLengths=c(2,Inf)))
-  
+  dtm <- DocumentTermMatrix(corpus,control=list(wordLengths=c(2,10)))
+  #print(inspect(dtm))
   #testing
   print("Removing sparse terms...")
-  dtm <- removeSparseTerms(x = dtm, sparse = 0.9)
+  dtm <- removeSparseTerms(x = dtm, sparse = 0.99)
+  print(inspect(dtm))
   print("Dtm done. Tfidf...")
+
   tfidf <- weightTfIdf(dtm,normalize = TRUE)
 
-   print("Converting tfidf to matrix.")
-  #tfidf
-  m <- as.matrix(tfidf)
-  rownames(m) <- a$name
-   print("Finished find_words_xml. Returning tfidf matrix.")
-
-  m
+   
+  print("Finished find_words_xml. Returning tfidf.")
+  tfidf
   
 }
+
+ tfidfToMatrix<-function(tfidf,a){
+  print("Converting tfidf to matrix.")
+  m <- as.matrix(tfidf)
+  rownames(m) <- a$name
+  print("Done tfidf-to-matrix.")
+  print(str(m))
+
+  m
+ }
 
 
 getCityTextTable<-function(xml_root){
@@ -304,7 +314,8 @@ readXMLandGetDataTable<-function(){
   load_libraries()
   xmlRawDataTable<-readXMLandGetDataTable()
   xmlCorpusScores<-find_words_xml(xmlRawDataTable)
-  keywords<-bake_results(xmlCorpusScores)
-  filteredDestinationsKeywords<-filterSiteByKeywords(xmlCorpusScores,keywords,100)
+  tfidfMatrix<-tfidfToMatrix(xmlCorpusScores,xmlRawDataTable)
+  keywords<-bake_results(tfidfMatrix)
+  filteredDestinationsKeywords<-filterSiteByKeywords(tfidfMatrix,keywords,100)
 
 
