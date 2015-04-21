@@ -1,14 +1,21 @@
 load_libraries<-function(){
-#  require("bigmemory")
+  require("bigmemory")
   require ("XML")
   require ("RCurl")
   require ("tm")
   require("SnowballC")
   require("wordcloud")
+  require("data.table")
   
 }
 
-load_libraries()
+
+# XML and RCurl need specific XML an Curl operating system libs installed
+install_libraries<-function(){
+  install.packages(c("XML","RCurl","tm","SnowballC","wordcloud","XLConnect","data.table"))
+}
+
+
 
 find_words <-function (number=1) {
   require ("XML")
@@ -24,9 +31,9 @@ find_words <-function (number=1) {
   #url <- 'http://en.wikipedia.org/wiki/'
   stop1<-read.csv("stopwords.csv",header = F,sep = "")
   if (number==1)
-    url <- 'http://wikitravel.org/en/'
+  url <- 'http://wikitravel.org/en/'
   else
-    url <- 'https://en.wikivoyage.org/wiki/'
+  url <- 'https://en.wikivoyage.org/wiki/'
   docs <- NULL
   dat2 <- NULL
   capitals <- t(capitals)
@@ -36,7 +43,7 @@ find_words <-function (number=1) {
   i <- 0
   # podia ser paralelizado (par.apply) para fazer download ao mesmo tempo
   if (TRUE){
-    
+
     for(u in urls) {
       i<-i+1
       doc <- getURL(u)
@@ -78,16 +85,16 @@ find_words <-function (number=1) {
   chinaRemove <- grep("docs", iconv(docs, "latin1", "ASCII", sub="docs"))
   
   
-    corpus <- Corpus(VectorSource(docs))
- corpus <- tm_map(corpus, removeWords, stopwords("english"))
- corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
- corpus <- tm_map(corpus, removeWords, chinaRemove)
+  corpus <- Corpus(VectorSource(docs))
+  corpus <- tm_map(corpus, removeWords, stopwords("english"))
+  corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
+  corpus <- tm_map(corpus, removeWords, chinaRemove)
   
     #corpus[[1]] <- stemDocument(corpus[[1]])
       #print(corpus)
-    dtm <- DocumentTermMatrix(corpus)
-    tfidf <- weightTfIdf(dtm,normalize = TRUE)
-    m <- as.matrix(tfidf)
+      dtm <- DocumentTermMatrix(corpus)
+      tfidf <- weightTfIdf(dtm,normalize = TRUE)
+      m <- as.matrix(tfidf)
     #print(m)
     
     rownames(m) <- capitals
@@ -117,10 +124,10 @@ find_words <-function (number=1) {
     keywords_destino_T_Freque
   }
 
-filterSiteByKeywords<-function(wikiSite,wikiKeywords,minimum_ocurrences=100){
-  new_wiki<-wikiSite[,names(wikiKeywords[wikiKeywords>minimum_ocurrences])]
-  new_wiki
-}
+  filterSiteByKeywords<-function(wikiSite,wikiKeywords,minimum_ocurrences=100){
+    new_wiki<-wikiSite[,names(wikiKeywords[wikiKeywords>minimum_ocurrences])]
+    new_wiki
+  }
   
 #plot
 graphic_words_locations<-function(wikicorpus,keyword_array,word){
@@ -155,8 +162,9 @@ wordcloud_city<-function(wiki,city,max=100){
 
 wordcloud_category<-function(wiki,word,max=100){
   require("wordcloud")
-print(max)
+  #print(max)
   wordcloud(names(wiki[,word]),wiki[,word],
+  colors=brewer.pal(8,"Dark2"),
   #scale=c(4,.5),
   #min.freq = 5,
   max.words = max)
@@ -172,7 +180,7 @@ searchXMLSite<-function(xml_data,index_site,index_sub){
     a<-c(a,xml_data[[i]][[1]])
   }
 }
-  
+
 getXmlRoot<-function(file="enwikivoyage-latest-pages-articles.xml"){
   xml<-xmlParse(file)
   xmlRoot(xml)
@@ -201,27 +209,35 @@ nameIsCity<-function(titleOfPage){
 
 
 find_words_xml<-function(a){
+  print("starting find_words_xml")
   docs<-a$text
   stop1<-read.csv("stopwords.csv",header = F,sep = "")
   
   chinaRemove <- grep("docs", iconv(docs, "latin1", "ASCII", sub="docs"))
   
-  
+  print("transforming text in corpora...")
   corpus <- Corpus(VectorSource(docs))
+  print("Corpora obtained. Filtering text...")
   corpus <- tm_map(corpus, removeWords, stopwords("english"))
   corpus <- tm_map(corpus, removeWords, as.character(stop1[[1]]))
   corpus <- tm_map(corpus, removeWords, chinaRemove)
-  
+  corpus <- tm_map(corpus, PlainTextDocument3)
   #corpus[[1]] <- stemDocument(corpus[[1]])
   #print(corpus)
+  print("Filtered. Converting in dtm...")
   dtm <- DocumentTermMatrix(corpus)
+  print("Dtm done. Tfidf...")
+  #testing
+  dtm <- removeSparseTerms(x = dtm, sparse = 0.9)
   tfidf <- weightTfIdf(dtm,normalize = TRUE)
- 
-  
-  tfidf
-  #m <- as.matrix(tfidf)
-  #rownames(m) <- a$name
-  #m
+
+   print("Converting tfidf to matrix.")
+  #tfidf
+  m <- as.matrix(tfidf)
+  rownames(m) <- a$name
+   print("Finished find_words_xml. Returning tfidf matrix.")
+
+  m
   
 }
 
@@ -234,6 +250,7 @@ getCityTextTable<-function(xml_root){
   cities=c()
   text=c()
   xsize<-xmlSize(xml_root)
+  j<-0
   for (i in 1:xsize){
     txt<-getTextOfPage(xml_root,i)
     city<-getTitleOfPage(xml_root,i)
@@ -249,8 +266,11 @@ getCityTextTable<-function(xml_root){
       text<-c(text,txt)
       
       cities<-c(cities,city)
+      
+      j<-j+1
+      print(j)
       print(city)
-      }
+    }
   }
   DT=data.table(name=cities,text=text)
   DT
@@ -258,21 +278,23 @@ getCityTextTable<-function(xml_root){
 
 #main function to get the xml table (does all the work, read, filter, parse and save)
 readXMLandGetDataTable<-function(){
+  print("starting readXMLandGetDataTable")
   require("XML")
   a<- getXmlRoot()
   b<-getCityTextTable(a)
+  print("finished readXMLandGetDataTable")
   b
 }
 
-#runs the process and returns the filtered destination/keyword score table
-getDestinationsKeywords<-function(){
-a<-1
-b<-2
-xmlRawDataTable<-readXMLandGetDataTable()
-xmlCorpusScores<-find_words_xml(xmlRawDataTable)
-keywords<-bake_results(xmlCorpusScores)
-filteredDestinationsKeywords<-filterSiteByKeywords(xmlCorpusScores,keywords,100)
+#uncomment the following line(s) to autorun the process at script reload
+#loads libraries, runs the process and returns the filtered destination/keyword score table.
+#a guide to know which functions to execute on the command line
+#by the end of the process keywords has the words by order and filteredDestinationsKeywords has the destinations and keyword matching filtered
 
-}
-  
+  load_libraries()
+  xmlRawDataTable<-readXMLandGetDataTable()
+  xmlCorpusScores<-find_words_xml(xmlRawDataTable)
+  keywords<-bake_results(xmlCorpusScores)
+  filteredDestinationsKeywords<-filterSiteByKeywords(xmlCorpusScores,keywords,100)
+
 
