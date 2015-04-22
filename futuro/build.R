@@ -50,7 +50,7 @@ save_terms <- function(m)
 {
 	library(lsa)
 	m <- get_terms()
-	m <- lw_tf(m) * gw_idf(m)
+	m <- lw_logtf(m) * gw_idf(m)
 	space <- lsa(m)
 	save(space, file='space.Rdata')
 }

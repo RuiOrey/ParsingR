@@ -14,7 +14,7 @@ parecidos_com <- function(termo, max=20)
 	w <- sort(associate(m, termo), TRUE)
 
 	library(wordcloud)
-	wordcloud(names(w), w, max=max)
+	wordcloud(names(w), w, max.words=max)
 }
 
 
