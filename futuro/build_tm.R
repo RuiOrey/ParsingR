@@ -48,7 +48,6 @@ get_terms <- function(url = 'https://en.wikivoyage.org/wiki/')
 
 save_terms <- function(m)
 {
-	library(lsa)
 	m <- get_terms()
 	save(m, file='m.Rdata')
 }
