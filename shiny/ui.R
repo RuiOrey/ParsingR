@@ -1,22 +1,17 @@
 library(shiny)
 
-shinyUI(fluidPage(
-  # Application title
-  titlePanel("Word Cloud"),
+shinyUI(
+	fluidPage(
+		titlePanel("Moontrip"),
 
-  sidebarLayout(
-    # Sidebar with a slider and selection inputs
-    sidebarPanel(
-      textInput("word", "Keyword:", "surf"),
-      actionButton("update", "Change"),
-      hr(),
-      sliderInput("max", "Maximum cities:", min=1,  max=500, value=100)
-    ),
-
-    # Show Word Cloud
-    mainPanel(
-      plotOutput("plot")
-    )
-  )
-)
+		sidebarLayout(
+			sidebarPanel(
+				textInput("keywords", "Keywords:", "surf"),
+				sliderInput("max", "Maximum cities:", min=1,  max=500, value=100)
+			),
+			mainPanel(
+				plotOutput("plot")
+			)
+		)
+	)
 )

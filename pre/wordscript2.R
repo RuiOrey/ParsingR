@@ -41,6 +41,7 @@ branches <- function() {
 					t <- gsub('\t\r\n\v\f[:digit:][:punct:]', '', tolower(t), useBytes=TRUE)
 					t <- stripWhitespace(t)
 					t <- removeWords(t, stopwords('english'))
+					t <- stemDocument(t, 'english')
 					t <- iconv(strsplit(t, ' ', TRUE)[[1]], 'latin1', 'ASCII')
 
 					docs[[title]] <- t
