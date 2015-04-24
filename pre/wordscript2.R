@@ -12,6 +12,7 @@ if(!file.exists('xml')) {
 
 library(XML)
 library(tm)
+source('utils.R')
 
 branches <- function() {
 	docs <- new.env()  # inserir em env é ainda mais eficiente que list(), parece
@@ -27,24 +28,9 @@ branches <- function() {
 					print(title)
 					# o parser repete chaves "text", dai temos que juntá-las
 					t <- paste(sapply(n[names(n) == 'text'], xmlValue), collapse=' ')
-
 					# FIXME: acho que o Rui verificava que o texto tinha um certo
 					# tamanho. ie: length(t)>100
-
-					# transformações ao texto
-					# podiamos tb fazer dps com tm_map(); não sei qual mais rapido
-					# mas aqui conseguimos juntar várias coisas numa única expressão
-					# regular
-
-					# FIXME: ficava mais rápido usando formato 'perl=TRUE', ver:
-					# http://www.phpreferencebook.com/tag/pcre/
-					t <- gsub('\t\r\n\v\f[:digit:][:punct:]', '', tolower(t), useBytes=TRUE)
-					t <- stripWhitespace(t)
-					t <- removeWords(t, stopwords('english'))
-					t <- stemDocument(t, 'english')
-					t <- iconv(strsplit(t, ' ', TRUE)[[1]], 'latin1', 'ASCII')
-
-					docs[[title]] <- t
+					docs[[title]] <- transform_text(t)
 				}
 			}
 		}

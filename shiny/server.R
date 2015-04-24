@@ -1,9 +1,9 @@
-source("..procura/procura.R")
+source("..pre/search.R")
 
 shinyServer(
 	function(input, output) {
 		output$plot <- renderPlot({
-			procura(input$keywords, input$max)
+			search(input$keywords, input$max)
 		})
 	}
 )
