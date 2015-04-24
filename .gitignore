@@ -16,3 +16,7 @@ vignettes/*.pdf
 
 # ignora download de ficheiros:
 pre/xml
+pre/m.RData
+pre/dtm.RData
+pre/corpus.RData
+pre/m.csv
