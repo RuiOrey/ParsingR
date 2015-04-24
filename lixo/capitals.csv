@@ -1,0 +1,983 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    
+    
+    <title>ParsingR/capitals.csv at master · RuiOrey/ParsingR</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site" /><meta content="summary" name="twitter:card" /><meta content="RuiOrey/ParsingR" name="twitter:title" /><meta content="ParsingR" name="twitter:description" /><meta content="https://avatars0.githubusercontent.com/u/53763?v=3&amp;s=400" name="twitter:image:src" />
+      <meta content="GitHub" property="og:site_name" /><meta content="object" property="og:type" /><meta content="https://avatars0.githubusercontent.com/u/53763?v=3&amp;s=400" property="og:image" /><meta content="RuiOrey/ParsingR" property="og:title" /><meta content="https://github.com/RuiOrey/ParsingR" property="og:url" /><meta content="ParsingR" property="og:description" />
+      <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
+    <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    <link rel="web-socket" href="wss://live.github.com/_sockets/MTE4OTQyOTE6OTI5YzI1MDNkOTU5OWI4M2U0OWNhNjgxZWZhNGZiYzE6MjdhMzU3ZWEyNDFhNjE4ZTkzNTY3ZTM5N2FkMjU5OTE0MDRkNmMyZjA4MjEzZGNhODNhM2UzYjIxMWU5NWJmYQ==--5a44744d042e16ed79d82a481f3419f35d178278">
+    <meta name="pjax-timeout" content="1000">
+    <link rel="sudo-modal" href="/sessions/sudo_modal">
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="selected-link" value="repo_source" data-pjax-transient>
+      <meta name="google-analytics" content="UA-3769691-2">
+
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="BCFBD6B6:1FF3:3A058C1:5539AB42" name="octolytics-dimension-request_id" /><meta content="11894291" name="octolytics-actor-id" /><meta content="rpmcruz" name="octolytics-actor-login" /><meta content="9c956b61f875cd78ebafbd7d8f28f162430b55928ec452159f676711986ecba3" name="octolytics-actor-hash" />
+    <meta content="/private/private/blob/show" name="analytics-location" />
+    <meta content="Rails, view, blob#show" name="analytics-event" />
+    <meta class="js-ga-set" name="dimension1" content="Logged In">
+    <meta class="js-ga-set" name="dimension2" content="Header v3">
+    <meta name="is-dotcom" content="true">
+    <meta name="hostname" content="github.com">
+    <meta name="user-login" content="rpmcruz">
+
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+    <meta content="authenticity_token" name="csrf-param" />
+<meta content="lgNFc/8Y8sBqxDCbK21IpTomSVqaEuZnqMByIWIW236G8DBY/sIoi1q+EwQ9yxsvbxx3Gg9Q2NBi5eAYoeNolg==" name="csrf-token" />
+
+    <link href="https://assets-cdn.github.com/assets/github-fbb88baa8c28184f25d1a972d401bb2e63fbed64378a172707460803c12c0440.css" media="all" rel="stylesheet" />
+    <link href="https://assets-cdn.github.com/assets/github2-b11477f9aa851e67e46efbb84c8c2c776615ebb9fb07c4551873a066c4e48f67.css" media="all" rel="stylesheet" />
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="dd45ac9a07a24b9779f43a888c4447e3">
+
+      
+  <meta name="description" content="ParsingR">
+  <meta name="go-import" content="github.com/RuiOrey/ParsingR git https://github.com/RuiOrey/ParsingR.git">
+
+  <meta content="53763" name="octolytics-dimension-user_id" /><meta content="RuiOrey" name="octolytics-dimension-user_login" /><meta content="33754833" name="octolytics-dimension-repository_id" /><meta content="RuiOrey/ParsingR" name="octolytics-dimension-repository_nwo" /><meta content="false" name="octolytics-dimension-repository_public" /><meta content="false" name="octolytics-dimension-repository_is_fork" /><meta content="33754833" name="octolytics-dimension-repository_network_root_id" /><meta content="RuiOrey/ParsingR" name="octolytics-dimension-repository_network_root_nwo" />
+  <link href="https://github.com/RuiOrey/ParsingR/commits/master.atom?token=ALV-EyGY6DhJ_UWxk1jsXXI9QC1u770dks6zRuvXwA%3D%3D" rel="alternate" title="Recent Commits to ParsingR:master" type="application/atom+xml">
+
+  </head>
+
+
+  <body class="logged_in  env-production linux vis-private page-blob">
+    <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+    <div class="wrapper">
+      
+      
+      
+
+
+        <div class="header header-logged-in true" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-invertocat" href="https://github.com/" data-hotkey="g d" aria-label="Homepage" data-ga-click="Header, go to dashboard, icon:logo">
+  <span class="mega-octicon octicon-mark-github"></span>
+</a>
+
+
+      <div class="site-search repo-scope js-site-search" role="search">
+          <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/RuiOrey/ParsingR/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+  <input type="text"
+    class="js-site-search-field is-clearable"
+    data-hotkey="s"
+    name="q"
+    placeholder="Search"
+    data-global-scope-placeholder="Search GitHub"
+    data-repo-scope-placeholder="Search"
+    tabindex="1"
+    autocapitalize="off">
+  <div class="scope-badge">This repository</div>
+</form>
+      </div>
+
+      <ul class="header-nav left" role="navigation">
+          <li class="header-nav-item explore">
+            <a class="header-nav-link" href="/explore" data-ga-click="Header, go to explore, text:explore">Explore</a>
+          </li>
+            <li class="header-nav-item">
+              <a class="header-nav-link" href="https://gist.github.com" data-ga-click="Header, go to gist, text:gist">Gist</a>
+            </li>
+            <li class="header-nav-item">
+              <a class="header-nav-link" href="/blog" data-ga-click="Header, go to blog, text:blog">Blog</a>
+            </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://help.github.com" data-ga-click="Header, go to help, text:help">Help</a>
+          </li>
+      </ul>
+
+      
+<ul class="header-nav user-nav right" id="user-links">
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link name" href="/rpmcruz" data-ga-click="Header, go to profile, text:username">
+      <img alt="@rpmcruz" class="avatar" data-user="11894291" height="20" src="https://avatars1.githubusercontent.com/u/11894291?v=3&amp;s=40" width="20" />
+      <span class="css-truncate">
+        <span class="css-truncate-target">rpmcruz</span>
+      </span>
+    </a>
+  </li>
+
+  <li class="header-nav-item dropdown js-menu-container">
+    <a class="header-nav-link js-menu-target tooltipped tooltipped-s" href="/new" aria-label="Create new..." data-ga-click="Header, create new, icon:add">
+      <span class="octicon octicon-plus"></span>
+      <span class="dropdown-caret"></span>
+    </a>
+
+    <div class="dropdown-menu-content js-menu-content">
+      <ul class="dropdown-menu">
+        
+<li>
+  <a href="/new" data-ga-click="Header, create new repository, icon:repo"><span class="octicon octicon-repo"></span> New repository</a>
+</li>
+<li>
+  <a href="/organizations/new" data-ga-click="Header, create new organization, icon:organization"><span class="octicon octicon-organization"></span> New organization</a>
+</li>
+
+
+  <li class="dropdown-divider"></li>
+  <li class="dropdown-header">
+    <span title="RuiOrey/ParsingR">This repository</span>
+  </li>
+    <li>
+      <a href="/RuiOrey/ParsingR/issues/new" data-ga-click="Header, create new issue, icon:issue"><span class="octicon octicon-issue-opened"></span> New issue</a>
+    </li>
+
+      </ul>
+    </div>
+  </li>
+
+  <li class="header-nav-item">
+      <span 
+        data-channel="notification-changed:rpmcruz"
+        data-url="/notifications/header">
+      <a href="/notifications" aria-label="You have no unread notifications" class="header-nav-link notification-indicator tooltipped tooltipped-s" data-ga-click="Header, go to notifications, icon:read" data-hotkey="g n">
+          <span class="mail-status all-read"></span>
+          <span class="octicon octicon-inbox"></span>
+</a>  </span>
+
+  </li>
+
+  <li class="header-nav-item">
+    <a class="header-nav-link tooltipped tooltipped-s" href="/settings/profile" id="account_settings" aria-label="Settings" data-ga-click="Header, go to settings, icon:settings">
+      <span class="octicon octicon-gear"></span>
+    </a>
+  </li>
+
+  <li class="header-nav-item">
+    <form accept-charset="UTF-8" action="/logout" class="logout-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="u7HyTGYljrh57YyU4VUW3yjl0cYJKeUuf/yrHDLGCizjvZdV8pqsPNtSydRLQR7VqrFy8oEcCy/d2ZUK6fMhwA==" /></div>
+      <button class="header-nav-link sign-out-button tooltipped tooltipped-s" aria-label="Sign out" data-ga-click="Header, sign out, icon:logout">
+        <span class="octicon octicon-sign-out"></span>
+      </button>
+</form>  </li>
+
+</ul>
+
+
+
+    
+  </div>
+</div>
+
+        
+
+        
+
+
+      <div id="start-of-content" class="accessibility-aid"></div>
+          <div class="site" itemscope itemtype="http://schema.org/WebPage">
+    <div id="js-flash-container">
+      
+    </div>
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+        
+<ul class="pagehead-actions">
+
+  <li>
+      <form accept-charset="UTF-8" action="/notifications/subscribe" class="js-social-container" data-autosubmit="true" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="+oJsdADwILHoOWEHj7Q3JsiEix7vT7i1wrBGnOYa8uVCY5hDWfc612NmI65HwbXdleDQrprTmGQG2msQH225vA==" /></div>    <input id="repository_id" name="repository_id" type="hidden" value="33754833" />
+
+      <div class="select-menu js-menu-container js-select-menu">
+        <a href="/RuiOrey/ParsingR/subscription"
+          class="btn btn-sm btn-with-count select-menu-button js-menu-target" role="button" tabindex="0" aria-haspopup="true"
+          data-ga-click="Repository, click Watch settings, action:blob#show">
+          <span class="js-select-button">
+            <span class="octicon octicon-eye"></span>
+            Unwatch
+          </span>
+        </a>
+        <a class="social-count js-social-count" href="/RuiOrey/ParsingR/watchers">
+          3
+        </a>
+
+        <div class="select-menu-modal-holder">
+          <div class="select-menu-modal subscription-menu-modal js-menu-content" aria-hidden="true">
+            <div class="select-menu-header">
+              <span class="select-menu-title">Notifications</span>
+              <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+            </div>
+
+            <div class="select-menu-list js-navigation-container" role="menu">
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_included" name="do" type="radio" value="included" />
+                  <span class="select-menu-item-heading">Not watching</span>
+                  <span class="description">Be notified when participating or @mentioned.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Watch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item selected" role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input checked="checked" id="do_subscribed" name="do" type="radio" value="subscribed" />
+                  <span class="select-menu-item-heading">Watching</span>
+                  <span class="description">Be notified of all conversations.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-eye"></span>
+                    Unwatch
+                  </span>
+                </div>
+              </div>
+
+              <div class="select-menu-item js-navigation-item " role="menuitem" tabindex="0">
+                <span class="select-menu-item-icon octicon octicon-check"></span>
+                <div class="select-menu-item-text">
+                  <input id="do_ignore" name="do" type="radio" value="ignore" />
+                  <span class="select-menu-item-heading">Ignoring</span>
+                  <span class="description">Never be notified.</span>
+                  <span class="js-select-button-text hidden-select-button-text">
+                    <span class="octicon octicon-mute"></span>
+                    Stop ignoring
+                  </span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+</form>
+  </li>
+
+  <li>
+    
+  <div class="js-toggler-container js-social-container starring-container on">
+
+    <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/unstar" class="js-toggler-form starred js-unstar-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="U/vyps0r2TNHKqvFhDy58uKx+Q9wPYmnXrFxPXbGCtAGDVQ6nXJvC9ZoGVZerXJ9+NxS3o9/+MHSIEi+IreHKQ==" /></div>
+      <button
+        class="btn btn-sm btn-with-count js-toggler-target"
+        aria-label="Unstar this repository" title="Unstar RuiOrey/ParsingR"
+        data-ga-click="Repository, click unstar button, action:blob#show; text:Unstar">
+        <span class="octicon octicon-star"></span>
+        Unstar
+      </button>
+        <a class="social-count js-social-count" href="/RuiOrey/ParsingR/stargazers">
+          2
+        </a>
+</form>
+    <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/star" class="js-toggler-form unstarred js-star-button" data-remote="true" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="lVN5T+tvBtU5cyI3URaBC0gejJ0cyW80538MMkfYlW/dOhiUyYHAU+0nikKNRhuHKG7ZOdCpwYZh4zQOBofwOg==" /></div>
+      <button
+        class="btn btn-sm btn-with-count js-toggler-target"
+        aria-label="Star this repository" title="Star RuiOrey/ParsingR"
+        data-ga-click="Repository, click star button, action:blob#show; text:Star">
+        <span class="octicon octicon-star"></span>
+        Star
+      </button>
+        <a class="social-count js-social-count" href="/RuiOrey/ParsingR/stargazers">
+          2
+        </a>
+</form>  </div>
+
+  </li>
+
+        <li>
+          <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/fork" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="mN4PvBQI22KwEj+KGNs4CCdmSzQYKZuXsa0v2CmyXtwA+BdEE8GJf0jMlI/9Ik0oIjuzQOQVQWwlZfzkQWiCqA==" /></div>
+            <button
+                type="submit"
+                class="btn btn-sm btn-with-count"
+                data-ga-click="Repository, show fork modal, action:blob#show; text:Fork"
+                title="Fork your own copy of RuiOrey/ParsingR to your account"
+                aria-label="Fork your own copy of RuiOrey/ParsingR to your account">
+              <span class="octicon octicon-repo-forked"></span>
+              Fork
+            </button>
+            <a href="/RuiOrey/ParsingR/network" class="social-count">0</a>
+</form>        </li>
+
+</ul>
+
+        <h1 itemscope itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title private">
+          <span class="mega-octicon octicon-lock"></span>
+          <span class="author"><a href="/RuiOrey" class="url fn" itemprop="url" rel="author"><span itemprop="title">RuiOrey</span></a></span><!--
+       --><span class="path-divider">/</span><!--
+       --><strong><a href="/RuiOrey/ParsingR" class="js-current-repository" data-pjax="#js-repo-pjax-container">ParsingR</a></strong>
+            <span class="repo-private-label">private</span>
+
+          <span class="page-context-loader">
+            <img alt="" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline  ">
+        <div class="repository-sidebar clearfix">
+            
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders"
+     role="navigation"
+     data-pjax="#js-repo-pjax-container"
+     data-issue-count-url="/RuiOrey/ParsingR/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="/RuiOrey/ParsingR" aria-label="Code" class="selected js-selected-navigation-item sunken-menu-item" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /RuiOrey/ParsingR">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="/RuiOrey/ParsingR/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /RuiOrey/ParsingR/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="js-issue-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull requests">
+      <a href="/RuiOrey/ParsingR/pulls" aria-label="Pull requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /RuiOrey/ParsingR/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull requests</span>
+          <span class="js-pull-replace-counter"></span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Wiki">
+        <a href="/RuiOrey/ParsingR/wiki" aria-label="Wiki" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g w" data-selected-links="repo_wiki /RuiOrey/ParsingR/wiki">
+          <span class="octicon octicon-book"></span> <span class="full-word">Wiki</span>
+          <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>      </li>
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="/RuiOrey/ParsingR/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /RuiOrey/ParsingR/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="/RuiOrey/ParsingR/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /RuiOrey/ParsingR/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16" />
+</a>    </li>
+  </ul>
+
+
+</nav>
+
+              <div class="only-with-full-nav">
+                  
+<div class="clone-url open"
+  data-protocol-type="http"
+  data-url="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone">
+  <h3><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/RuiOrey/ParsingR.git" readonly="readonly">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="clone-url "
+  data-protocol-type="ssh"
+  data-url="/users/set_protocol?protocol_selector=ssh&amp;protocol_type=clone">
+  <h3><span class="text-emphasized">SSH</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target"
+           value="git@github.com:RuiOrey/ParsingR.git" readonly="readonly">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="clone-url "
+  data-protocol-type="subversion"
+  data-url="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone">
+  <h3><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target"
+           value="https://github.com/RuiOrey/ParsingR" readonly="readonly">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+
+<p class="clone-options">You can clone with
+  <a href="#" class="js-clone-selector" data-protocol="http">HTTPS</a>, <a href="#" class="js-clone-selector" data-protocol="ssh">SSH</a>, or <a href="#" class="js-clone-selector" data-protocol="subversion">Subversion</a>.
+  <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</p>
+
+
+
+
+                <a href="/RuiOrey/ParsingR/archive/master.zip"
+                   class="btn btn-sm sidebar-button"
+                   aria-label="Download the contents of RuiOrey/ParsingR as a zip file"
+                   title="Download the contents of RuiOrey/ParsingR as a zip file"
+                   rel="nofollow">
+                  <span class="octicon octicon-cloud-download"></span>
+                  Download ZIP
+                </a>
+              </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container>
+          
+
+<a href="/RuiOrey/ParsingR/blob/7ba0c817cdd4a23e1f01b8f05c3cf45ac83c618f/pre/capitals.csv" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+<!-- blob contrib key: blob_contributors:v21:4a06a5e5f9162fc5064a0fd87b73eb86 -->
+
+<div class="file-navigation js-zeroclipboard-container">
+  
+<div class="select-menu js-menu-container js-select-menu left">
+  <span class="btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w"
+    data-master-branch="master"
+    data-ref="master"
+    title="master"
+    role="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <span class="octicon octicon-git-branch"></span>
+    <i>branch:</i>
+    <span class="js-select-button css-truncate-target">master</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Find or create a branch…" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Find or create a branch…">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="branches" data-filter-placeholder="Find or create a branch…" class="js-select-menu-tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab">Tags</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <a class="select-menu-item js-navigation-item js-navigation-open selected"
+               href="/RuiOrey/ParsingR/blob/master/pre/capitals.csv"
+               data-name="master"
+               data-skip-pjax="true"
+               rel="nofollow">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <span class="select-menu-item-text css-truncate-target" title="master">
+                master
+              </span>
+            </a>
+        </div>
+
+          <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/branches" class="js-create-branch select-menu-item select-menu-new-item-form js-navigation-item js-new-item-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="KkYa+A596hzQ19SK2E7DyS3POXMV3lMi5oMaL7LiKSat34xUsgPoe0bCSxP0zx2uMSeGmhwarQKqMfCMsG6MfA==" /></div>
+            <span class="octicon octicon-git-branch select-menu-item-icon"></span>
+            <div class="select-menu-item-text">
+              <span class="select-menu-item-heading">Create branch: <span class="js-new-item-name"></span></span>
+              <span class="description">from ‘master’</span>
+            </div>
+            <input type="hidden" name="name" id="name" class="js-new-item-value">
+            <input type="hidden" name="branch" id="branch" value="master">
+            <input type="hidden" name="path" id="path" value="pre/capitals.csv">
+</form>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="btn-group right">
+    <a href="/RuiOrey/ParsingR/find/master"
+          class="js-show-file-finder btn btn-sm empty-icon tooltipped tooltipped-s"
+          data-pjax
+          data-hotkey="t"
+          aria-label="Quickly jump between files">
+      <span class="octicon octicon-list-unordered"></span>
+    </a>
+    <button aria-label="Copy file path to clipboard" class="js-zeroclipboard btn btn-sm zeroclipboard-button tooltipped tooltipped-s" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+  </div>
+
+  <div class="breadcrumb js-zeroclipboard-target">
+    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/RuiOrey/ParsingR" class="" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">ParsingR</span></a></span></span><span class="separator">/</span><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/RuiOrey/ParsingR/tree/master/pre" class="" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">pre</span></a></span><span class="separator">/</span><strong class="final-path">capitals.csv</strong>
+  </div>
+</div>
+
+<include-fragment class="commit commit-loader file-history-tease" src="/RuiOrey/ParsingR/contributors/master/pre/capitals.csv">
+  <div class="file-history-tease-header">
+    Fetching contributors&hellip;
+  </div>
+
+  <div class="participation">
+    <p class="loader-loading"><img alt="" height="16" src="https://assets-cdn.github.com/assets/spinners/octocat-spinner-32-EAF2F5-0bdc57d34b85c4a4de9d0d1db10cd70e8a95f33ff4f46c5a8c48b4bf4e5a9abe.gif" width="16" /></p>
+    <p class="loader-error">Cannot retrieve contributors at this time</p>
+  </div>
+</include-fragment>
+<div class="file">
+  <div class="file-header">
+    <div class="file-actions">
+
+      <div class="btn-group">
+        <a href="/RuiOrey/ParsingR/raw/master/pre/capitals.csv" class="btn btn-sm " id="raw-url">Raw</a>
+          <a href="/RuiOrey/ParsingR/blame/master/pre/capitals.csv" class="btn btn-sm js-update-url-with-hash">Blame</a>
+        <a href="/RuiOrey/ParsingR/commits/master/pre/capitals.csv" class="btn btn-sm " rel="nofollow">History</a>
+      </div>
+
+
+            <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/edit/master/pre/capitals.csv" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="JVGDBnISgaCHGvYZcUEkwhD5YrxyF4ZF6lsxPyyJYYPcPdlVco9sDW+8JYcPD8ctsmky4j8enLKvdwY9zj4qSw==" /></div>
+              <button class="octicon-btn tooltipped tooltipped-n" type="submit" aria-label="Edit this file" data-hotkey="e" data-disable-with>
+                <span class="octicon octicon-pencil"></span>
+              </button>
+</form>
+          <form accept-charset="UTF-8" action="/RuiOrey/ParsingR/delete/master/pre/capitals.csv" class="inline-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="DBbn3rFGKF+SWVbRaSeSfLFOGb1x7Fq6M/F/9ZU3Xbv7zYFuF/ufO/6q58EsRwH2Q/Un41LhKb7QvY2LD2xHvg==" /></div>
+            <button class="octicon-btn octicon-btn-danger tooltipped tooltipped-n" type="submit" aria-label="Delete this file" data-disable-with>
+              <span class="octicon octicon-trashcan"></span>
+            </button>
+</form>    </div>
+
+    <div class="file-info">
+        2 lines (1 sloc)
+        <span class="file-info-divider"></span>
+      2.85 kb
+    </div>
+  </div>
+  
+  <div class="blob-wrapper data type-text">
+      <div class="blob-interaction-bar">
+  <span class="octicon octicon-search"></span>
+  <input type="text" name="filter" class="js-csv-filter-field blob-filter" placeholder="Search this file..." autocapitalize="off">
+</div>
+
+<div class="markdown-body">
+  <table class="js-csv-data csv-data js-file-line-container">
+    <thead>
+      <tr id="LC1" class="js-file-line">
+        <td id="L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <th>Abu_Dhabi</th>
+        <th>Abuja</th>
+        <th>Accra</th>
+        <th>Adamstown</th>
+        <th>Pitcairn_Island</th>
+        <th>Addis_Ababa</th>
+        <th>Algiers</th>
+        <th>Alofi</th>
+        <th>Amman</th>
+        <th>Amsterdam</th>
+        <th>Andorra_la_Vella</th>
+        <th>Ankara</th>
+        <th>Antananarivo</th>
+        <th>Apia</th>
+        <th>Ashgabat</th>
+        <th>Asmara</th>
+        <th>Astana</th>
+        <th>Asunci%C3%B3n</th>
+        <th>Athens</th>
+        <th>Avarua</th>
+        <th>Baghdad</th>
+        <th>Baku</th>
+        <th>Bamako</th>
+        <th>Bandar_Seri_Begawan</th>
+        <th>Bangkok</th>
+        <th>Bangui</th>
+        <th>Banjul</th>
+        <th>Basseterre</th>
+        <th>Beijing</th>
+        <th>Beirut</th>
+        <th>Belgrade</th>
+        <th>Belmopan</th>
+        <th>Berlin</th>
+        <th>Bern</th>
+        <th>Bishkek</th>
+        <th>Bissau</th>
+        <th>Bogot%C3%A1</th>
+        <th>Bras%C3%ADlia</th>
+        <th>Bratislava</th>
+        <th>Brazzaville</th>
+        <th>Bridgetown</th>
+        <th>City_of_Brussels</th>
+        <th>Bucharest</th>
+        <th>Budapest</th>
+        <th>Buenos_Aires</th>
+        <th>Bujumbura</th>
+        <th>Cairo</th>
+        <th>Canberra</th>
+        <th>Caracas</th>
+        <th>Castries</th>
+        <th>Cayenne</th>
+        <th>Charlotte_Amalie</th>
+        <th>United_States_Virgin_Islands</th>
+        <th>Chisinau</th>
+        <th>Cockburn_Town</th>
+        <th>Conakry</th>
+        <th>Copenhagen</th>
+        <th>Dakar</th>
+        <th>Damascus</th>
+        <th>Dhaka</th>
+        <th>Dili</th>
+        <th>Djibouti_(city)</th>
+        <th>Dodoma</th>
+        <th>Doha</th>
+        <th>Douglas</th>
+        <th>Isle_of_Man</th>
+        <th>Dublin</th>
+        <th>Dushanbe</th>
+        <th>Edinburgh_of_the_Seven_Seas</th>
+        <th>El_Aai%C3%BAn</th>
+        <th>Episkopi_Cantonment</th>
+        <th>Flying_Fish_Cove</th>
+        <th>Freetown</th>
+        <th>Funafuti</th>
+        <th>Gaborone</th>
+        <th>George_Town</th>
+        <th>Cayman_Islands</th>
+        <th>Georgetown</th>
+        <th>Ascension_Island</th>
+        <th>Georgetown</th>
+        <th>Guyana</th>
+        <th>Gibraltar</th>
+        <th>Guatemala_City</th>
+        <th>Gustavia</th>
+        <th>Saint_Barth%C3%A9lemy</th>
+        <th>Hag%C3%A5t%C3%B1a</th>
+        <th>Hamilton</th>
+        <th>Bermuda</th>
+        <th>Hanga_Roa</th>
+        <th>Hanoi</th>
+        <th>Harare</th>
+        <th>Hargeisa</th>
+        <th>Havana</th>
+        <th>Helsinki</th>
+        <th>Honiara</th>
+        <th>Islamabad</th>
+        <th>Jakarta</th>
+        <th>Jamestown</th>
+        <th>Saint_Helena</th>
+        <th>Jerusalem</th>
+        <th>East_Jerusalem</th>
+        <th>Palestinian_National_Authority</th>
+        <th>Juba</th>
+        <th>Kabul</th>
+        <th>Kampala</th>
+        <th>Kathmandu</th>
+        <th>Khartoum</th>
+        <th>Kiev</th>
+        <th>Kigali</th>
+        <th>King_Edward_Point</th>
+        <th>Kingston</th>
+        <th>Jamaica</th>
+        <th>Kingston</th>
+        <th>Norfolk_Island</th>
+        <th> Kingstown</th>
+        <th>Saint_Vincent_and_the_Grenadines</th>
+        <th>Kinshasa</th>
+        <th>Kuala_Lumpur</th>
+        <th>Kuwait_City</th>
+        <th>Libreville</th>
+        <th>Lilongwe</th>
+        <th>Lima</th>
+        <th>Lisbon</th>
+        <th>Ljubljana</th>
+        <th>Lom%C3%A9</th>
+        <th>London</th>
+        <th>Luanda</th>
+        <th>Lusaka</th>
+        <th>Luxembourg_(city)</th>
+        <th>Madrid</th>
+        <th>Majuro</th>
+        <th>Malabo</th>
+        <th>Mal%C3%A9</th>
+        <th>Managua</th>
+        <th>Manama</th>
+        <th>Manila</th>
+        <th>Maputo</th>
+        <th>Marigot</th>
+        <th>Saint_Martin</th>
+        <th>Maseru</th>
+        <th>Mata-Utu</th>
+        <th>Mbabane</th>
+        <th>Mexico_City</th>
+        <th>Minsk</th>
+        <th>Mogadishu</th>
+        <th>Monaco</th>
+        <th>Monrovia</th>
+        <th>Montevideo</th>
+        <th>Moroni</th>
+        <th>Comoros</th>
+        <th>Moscow</th>
+        <th>Muscat</th>
+        <th>Oman</th>
+        <th>Nairobi</th>
+        <th>Nassau</th>
+        <th>Bahamas</th>
+        <th>Naypyidaw</th>
+        <th>N%27Djamena</th>
+        <th>New_Delhi</th>
+        <th>Ngerulmud</th>
+        <th>Niamey</th>
+        <th>Nicosia</th>
+        <th>Nicosia</th>
+        <th>Nouakchott</th>
+        <th>Noum%C3%A9a</th>
+        <th>Nuku%CA%BBalofa</th>
+        <th>Nuuk</th>
+        <th>Oranjestad</th>
+        <th>Aruba</th>
+        <th>Oslo</th>
+        <th>Ottawa</th>
+        <th>Ouagadougou</th>
+        <th>Pago_Pago</th>
+        <th>Palikir</th>
+        <th>Panama_City</th>
+        <th>Papeete</th>
+        <th>Paramaribo</th>
+        <th>Paris</th>
+        <th>Philipsburg</th>
+        <th>Sint_Maarten</th>
+        <th>Phnom_Penh</th>
+        <th>Plymouth</th>
+        <th>Montserrat</th>
+        <th>Montserrat</th>
+        <th>Podgorica</th>
+        <th>Port_Louis</th>
+        <th>Port_Moresby</th>
+        <th>Port_Vila</th>
+        <th>Port-au-Prince</th>
+        <th>Port_of_Spain</th>
+        <th>Porto-Novo</th>
+        <th>Prague</th>
+        <th>Praia</th>
+        <th>Pretoria</th>
+        <th>Cape_Town</th>
+        <th>Pristina</th>
+        <th>Pyongyang</th>
+        <th>Quito</th>
+        <th>Rabat</th>
+        <th>Reykjav%C3%ADk</th>
+        <th>Riga</th>
+        <th>Riyadh</th>
+        <th>Road_Town</th>
+        <th>Rome</th>
+        <th>Roseau</th>
+        <th>Saipan</th>
+        <th>San_Jos%C3%A9</th>
+        <th>Costa_Rica</th>
+        <th>San_Juan</th>
+        <th>Puerto_Rico</th>
+        <th>City_of_San_Marino</th>
+        <th>San_Salvador</th>
+        <th>Sana%27a</th>
+        <th>Santiago</th>
+        <th>Santo_Domingo</th>
+        <th>S%C3%A3o_Tom%C3%A9</th>
+        <th>Sarajevo</th>
+        <th>Seoul</th>
+        <th>Singapore</th>
+        <th>Skopje</th>
+        <th>Sofia</th>
+        <th>Sri_Jayawardenepura_Kotte</th>
+        <th>Sri_Lanka</th>
+        <th>St._George%27s</th>
+        <th>Grenada</th>
+        <th>St._Helier</th>
+        <th>St._John%27s</th>
+        <th>Antigua_and_Barbuda</th>
+        <th>St._Peter_Port</th>
+        <th>St._Pierre</th>
+        <th>Saint-Pierre_and_Miquelon</th>
+        <th>Stanley</th>
+        <th>Falkland_Islands</th>
+        <th>Stepanakert</th>
+        <th>Stockholm</th>
+        <th>Sucre</th>
+        <th>Bolivia</th>
+        <th>Sukhumi</th>
+        <th>Suva</th>
+        <th>Taipei</th>
+        <th>Tallinn</th>
+        <th>Tarawa_Atoll</th>
+        <th>Tashkent</th>
+        <th>Tbilisi</th>
+        <th>Tegucigalpa</th>
+        <th>Tehran</th>
+        <th>Thimphu</th>
+        <th>Tirana</th>
+        <th>Tiraspol</th>
+        <th>Tokyo</th>
+        <th>T%C3%B3rshavn</th>
+        <th>Tripoli</th>
+        <th>Tskhinvali</th>
+        <th>Tunis</th>
+        <th>Ulaanbaatar</th>
+        <th>Vaduz</th>
+        <th>Valletta</th>
+        <th>The_Valley</th>
+        <th>Anguilla</th>
+        <th>Vatican_City</th>
+        <th>Victoria</th>
+        <th>Seychelles</th>
+        <th>Victoria_City</th>
+        <th>Hong_Kong</th>
+        <th>Vienna</th>
+        <th>Vientiane</th>
+        <th>Vilnius</th>
+        <th>Warsaw</th>
+        <th>Washington</th>
+        <th>D.C.</th>
+        <th>Wellington</th>
+        <th>West_Island</th>
+        <th>Cocos_(Keeling)_Islands</th>
+        <th>Willemstad</th>
+        <th>Windhoek</th>
+        <th>Yamoussoukro</th>
+        <th>Yaound%C3%A9</th>
+        <th>Yaren_district</th>
+        <th>Yerevan</th>
+        <th>Zagreb</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+
+  </div>
+
+</div>
+
+<a href="#jump-to-line" rel="facebox[.linejump]" data-hotkey="l" style="display:none">Jump to Line</a>
+<div id="jump-to-line" style="display:none">
+  <form accept-charset="UTF-8" action="" class="js-jump-to-line-form" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /></div>
+    <input class="linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line&hellip;" autofocus>
+    <button type="submit" class="btn">Go</button>
+</form></div>
+
+        </div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+        <li><a href="https://status.github.com/" data-ga-click="Footer, go to status, text:status">Status</a></li>
+      <li><a href="https://developer.github.com" data-ga-click="Footer, go to api, text:api">API</a></li>
+      <li><a href="https://training.github.com" data-ga-click="Footer, go to training, text:training">Training</a></li>
+      <li><a href="https://shop.github.com" data-ga-click="Footer, go to shop, text:shop">Shop</a></li>
+        <li><a href="https://github.com/blog" data-ga-click="Footer, go to blog, text:blog">Blog</a></li>
+        <li><a href="https://github.com/about" data-ga-click="Footer, go to about, text:about">About</a></li>
+
+    </ul>
+
+    <a href="https://github.com" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+</a>
+    <ul class="site-footer-links">
+      <li>&copy; 2015 <span title="0.05420s from github-fe130-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="https://github.com/site/terms" data-ga-click="Footer, go to terms, text:terms">Terms</a></li>
+        <li><a href="https://github.com/site/privacy" data-ga-click="Footer, go to privacy, text:privacy">Privacy</a></li>
+        <li><a href="https://github.com/security" data-ga-click="Footer, go to security, text:security">Security</a></li>
+        <li><a href="https://github.com/contact" data-ga-click="Footer, go to contact, text:contact">Contact</a></li>
+    </ul>
+  </div>
+</div>
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-suggester-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="fullscreen-contents js-fullscreen-contents" placeholder=""></textarea>
+      <div class="suggester-container">
+        <div class="suggester fullscreen-suggester js-suggester js-navigation-container"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="#" class="exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w" aria-label="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="#" class="theme-switcher js-theme-switcher tooltipped tooltipped-w"
+      aria-label="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    
+    
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="#" class="octicon octicon-x flash-close js-ajax-error-dismiss" aria-label="Dismiss error"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="https://assets-cdn.github.com/assets/frameworks-2c8ae50712a47d2b83d740cb875d55cdbbb3fdbccf303951cc6b7e63731e0c38.js"></script>
+      <script async="async" crossorigin="anonymous" src="https://assets-cdn.github.com/assets/github-747277110ee545263834c3918a562a2dc155e610ea48c5808df3838c3325cd60.js"></script>
+      
+      
+
+      <div class="js-socket-channel" data-channel="test:rpmcruz"></div>
+
+  </body>
+</html>
+
