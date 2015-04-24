@@ -1,0 +1,97 @@
+Moontrip: Testes de frequência de termos
+==========================================
+
+Para compilar este documento, correr em R:
+
+```{r, eval=FALSE}
+library(knitr)
+knit('freq.Rmd')
+pandoc -V geometry:margin=1in -s freq.md -o freq.pdf
+```
+
+Estes testes foram baseados neste site: [RStudio text mining examples][link1]
+
+[link1]: https://rstudio-pubs-static.s3.amazonaws.com/66739_c4422a1761bd4ee0b0bb8821d7780e12.html
+
+Será necessário *Rgraphviz*; para instalar:
+
+```{r, eval=FALSE}
+source("http://bioconductor.org/biocLite.R")
+biocLite("Rgraphviz")
+```
+
+Será necessário *topicmodels*; para instalar:
+
+```{r, eval=FALSE}
+sudo apt-get install libgsl0-dev
+install.packages('topicmodels')
+```
+
+Carregando o que é preciso:
+
+```{r, message=FALSE}
+library(tm)
+library(ggplot2)
+library(Rgraphviz)
+load('../pre/dtm.RData')
+load('../pre/m.RData')
+```
+
+"Histograma" do top-20 de termos melhor **pontuados**:
+
+```{r}
+term.freq <- sort(colSums(m), TRUE)[1:20]
+df <- data.frame(term=names(term.freq), freq=term.freq)
+ggplot(df, aes(x=reorder(term,freq), y=freq)) + geom_bar(stat = "identity") + xlab("Terms") + ylab("Count") + coord_flip() + theme_classic()
+```
+
+Termos mais correlacionados com os top-20:
+
+```{r}
+plot(dtm, term=names(term.freq), corThreshold=0.80)
+```
+
+Clustering
+------------------------------
+
+Dendograma. Estou a fazer para destinos, não para termos. É que é muito lento, fazer para termos.
+
+```{r}
+m2 <- m[1:100,names(term.freq)]
+distMatrix <- dist(scale(m2))
+fit <- hclust(distMatrix, method='ward.D')
+plot(fit)
+rect.hclust(fit, k=6) # cut tree into 6 clusters 
+```
+
+kmeans:
+
+```{r}
+k <- 6 # number of clusters
+res <- kmeans(m2, k)
+round(res$centers, digits=3)  # print
+```
+
+Outra técnica de clustering é pam; ver *fpc*.
+
+PCA
+---------------------------------
+
+A fazer ... :P
+
+```{r, eval=FALSE}
+library(topicmodels)
+load('../pre/corpus.RData')
+dtm2 <- DocumentTermMatrix(corpus)  # sem 'weighting'
+lda <- LDA(dtm2, 8)  # 8 topics
+term <- terms(lda, 4)  # 4 terms of every topic
+term
+```
+
+```{r, eval=FALSE}
+term <- apply(term, 2, paste, collapse = ", ")
+topic <- topics(lda, 1)
+topics <- data.frame(date=as.IDate(tweets.df$created), topic)
+qplot(date, ..count.., data=topics, geom="density",
+	fill=term[topic], position="stack")
+```

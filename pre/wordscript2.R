@@ -61,7 +61,8 @@ xmlEventParse('xml', branches=b, useTagName=FALSE, addContext=FALSE, ignoreBlank
 ####################
 
 print("A gerar a matriz de documento-termo ...")
-corpus <- Corpus(VectorSource(b$getDocs()))
+docs <- b$getDocs()
+corpus <- Corpus(VectorSource(docs))
 save(corpus, file='corpus.RData')
 
 print("Para matriz documento-termo ...")
@@ -69,11 +70,12 @@ dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(2,10)))
 print("- Remover esparsos ...")
 dtm <- removeSparseTerms(dtm, 0.99)
 print("- Transformações da matriz ...")
+#dtm <- weightTfIdf(dtm)
 dtm <- weightSMART(dtm, 'ltc')
 save(dtm, file='dtm.RData')
 
 print("Gravar ...")
 m <- as.matrix(dtm)
-rownames(m) <- names(txt)
+rownames(m) <- names(docs)
 save(m, file='m.RData')
 #write.csv(m, 'm.csv')
