@@ -13,3 +13,6 @@ vignettes/*.html
 vignettes/*.pdf
 
 .xml
+
+# ignora download de ficheiros:
+pre/xml

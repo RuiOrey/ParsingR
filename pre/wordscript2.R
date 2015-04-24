@@ -4,7 +4,7 @@
 # destinos/keywords.
 
 if(!file.exists('xml')) {
-	getURL('http://dumps.wikimedia.org/enwikivoyage/latest/enwikivoyage-latest-pages-articles.xml.bz2', 'xml.bz2')
+	download.file('http://dumps.wikimedia.org/enwikivoyage/latest/enwikivoyage-latest-pages-articles.xml.bz2', 'xml.bz2')
 	system('bunzip2 xml.bz2')
 }
 
@@ -12,47 +12,56 @@ if(!file.exists('xml')) {
 
 library(XML)
 library(tm)
-txt <<- list()  # xmlEventParse escreve para aqui
 
-# usa modelo hibrido sax/dom do pacote: para todos os 'page'
-# ele explora os seus conteúdos
-xmlEventParse('xml', branches=list(page=function(node) {
-	n <- xmlChildren(node)
-	if(all(c('title','revision') %in% names(n))) {
-		title <- n[['title']]
-		if(!grepl(':', xmlValue(title))) {
-			revision <- n[['revision']]
-			n <- xmlChildren(revision)
-			if('text' %in% names(n)) {
-				print(xmlValue(title))
-				# o parser repete chaves "text", dai temos que juntá-las
-				t <- paste(sapply(n[names(n) == 'text'], xmlValue), collapse=' ')
+branches <- function() {
+	docs <- new.env()  # inserir em env é ainda mais eficiente que list(), parece
 
-				# FIXME: acho que o Rui verificava que o texto tinha um certo
-				# tamanho. ie: length(t)>100
+	page <- function(node) {  # queremos ler as <page>
+		n <- xmlChildren(node)
+		if(all(c('title','revision') %in% names(n))) {
+			title <- xmlValue(n[['title']])
+			if(!grepl(':', title)) {
+				revision <- n[['revision']]
+				n <- xmlChildren(revision)
+				if('text' %in% names(n)) {
+					print(title)
+					# o parser repete chaves "text", dai temos que juntá-las
+					t <- paste(sapply(n[names(n) == 'text'], xmlValue), collapse=' ')
 
-				# transformações ao texto
-				# podiamos tb fazer dps com tm_map(); não sei qual mais rapido
-				# mas aqui conseguimos juntar várias coisas numa única expressão
-				# regular
+					# FIXME: acho que o Rui verificava que o texto tinha um certo
+					# tamanho. ie: length(t)>100
 
-				# FIXME: ficava mais rápido usando formato 'perl=TRUE', ver:
-				# http://www.phpreferencebook.com/tag/pcre/
-				t <- gsub('\t\r\n\v\f[:digit:][:punct:]', '', tolower(t), useBytes=TRUE)
-				t <- stripWhitespace(t)
-				t <- removeWords(t, stopwords('english'))
-				t <- iconv(strsplit(t, ' ', TRUE)[[1]], 'latin1', 'ASCII')
+					# transformações ao texto
+					# podiamos tb fazer dps com tm_map(); não sei qual mais rapido
+					# mas aqui conseguimos juntar várias coisas numa única expressão
+					# regular
 
-				txt[[xmlValue(title)]] <<- t
+					# FIXME: ficava mais rápido usando formato 'perl=TRUE', ver:
+					# http://www.phpreferencebook.com/tag/pcre/
+					t <- gsub('\t\r\n\v\f[:digit:][:punct:]', '', tolower(t), useBytes=TRUE)
+					t <- stripWhitespace(t)
+					t <- removeWords(t, stopwords('english'))
+					t <- iconv(strsplit(t, ' ', TRUE)[[1]], 'latin1', 'ASCII')
+
+					docs[[title]] <- t
+				}
 			}
 		}
 	}
-}), useTagName=FALSE, addContext=FALSE, ignoreBlanks=TRUE)
+	list(page=page, getDocs=function() as.list(docs))
+}
+
+
+# usa modelo hibrido sax/dom do pacote: para todos os 'page'
+# ele explora os seus conteúdos
+
+b <- branches()
+xmlEventParse('xml', branches=b, useTagName=FALSE, addContext=FALSE, ignoreBlanks=TRUE)
 
 ####################
 
 print("A gerar a matriz de documento-termo ...")
-corpus <- Corpus(VectorSource(txt))
+corpus <- Corpus(VectorSource(b$getDocs()))
 #save(corpus, file='corpus.RData')
 
 print("Para matriz documento-termo ...")
