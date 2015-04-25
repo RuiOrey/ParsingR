@@ -10,10 +10,11 @@ transform_text <- function(t)
 	t <- gsub('\t\r\n\v\f[:digit:][:punct:]', '', tolower(t), useBytes=TRUE)
 	t <- stripWhitespace(t)
 	t <- removeWords(t, stopwords('english'))
-	t <- stemDocument(t, 'english')
+	#t <- stemDocument(t, 'english')
 	
 	# transformar em vector, separados por espaços
 	t <- strsplit(t, ' ', TRUE)[[1]]
+	t <- sapply(t, function(x) stemDocument(x, 'english'))
 
 	# remover tudo do vector o que não for letra ou apostrofo ou hifen
 	t[!grepl('[^a-z\'\\-]', t)]
