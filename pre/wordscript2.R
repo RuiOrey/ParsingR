@@ -106,12 +106,12 @@ branches <- function() {
 						if (redirectDestination!= "false"){
 							redirects[[redirectDestination]]<-c(redirects[[title]],title)
 
-					}
+					}
 				}
 			}
 		}
 	}
-	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects))
+	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects),getFathers=function() as.list(father))
 }
 
 
@@ -131,7 +131,7 @@ save(corpus, file='corpus.RData')
 print("Para matriz documento-termo ...")
 dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(2,10)))
 print("- Remover esparsos ...")
-dtm <- removeSparseTerms(dtm, 0.99)
+dtm <- removeSparseTerms(dtm, 0.995)
 print("- Transformações da matriz ...")
 #dtm <- weightTfIdf(dtm)
 dtm <- weightSMART(dtm, 'ltc')
