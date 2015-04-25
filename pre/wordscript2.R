@@ -106,7 +106,7 @@ branches <- function() {
 						if (redirectDestination!= "false"){
 							redirects[[redirectDestination]]<-c(redirects[[title]],title)
 
-					}
+					}
 				}
 			}
 		}
