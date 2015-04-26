@@ -36,13 +36,27 @@ categoryTest<-function(t){
 }
 
 getFather <- function(t,breakrule=F){
-	if(grepl("IsPartOf",t))
+	if(grepl("[iI]sPartOf",t))
 	{	
-		partof<-gsub('.*IsPartOf\\|(.*?)\\}.*', '\\1', t)
+		partof<-gsub('.*[iI]s[pP]art[oO]f\\|(.*?)\\}.*', '\\1', t)
 		print(paste("PartOf:",partof))
 		partof
 }
 else{
+	"false"}
+}
+
+
+getGeo <- function(t,breakrule=F){
+	geo<-"false"
+	if(grepl("\\{geo",t))
+	{	
+		geo<-gsub('.*\\{geo\\|(.*?)\\|(.*?)[\\}\\|].*', '\\1,\\2', t)
+		print(paste("Geo:",geo))
+		geo
+}
+else{
+	print(paste("Geo:",geo))
 	"false"}
 }
 
@@ -76,10 +90,13 @@ branches <- function() {
 	docs <- new.env()  # inserir em env é ainda mais eficiente que list(), parece
 	redirects <- new.env()
 	father <- new.env()
-	pagenumber<-0
+	type <- new.env()
+	articlequality<-new.env()
+	geo<-new.env()
+	pagenumber <<- 0
 	page <- function(node) {  # queremos ler as <page>
 		n <- xmlChildren(node)
-		pagenumber=pagenumber+1
+		pagenumber <<- pagenumber+1  # n percebo porque ele dá sempre 1
 		if(all(c('title','revision') %in% names(n))) {
 			title <- xmlValue(n[['title']])
 			if(!grepl(':', title)) {
@@ -98,20 +115,25 @@ branches <- function() {
 
 					# FIXME: acho que o Rui verificava que o texto tinha um certo
 					# tamanho. ie: length(t)>100
-					if (validDestination!="false" && length(transformedText)>100){
+					if (validDestination!="false" && length(transformedText)>100)
+					{
 						docs[[title]] <- transformedText
-						father[[title]]<-getFather(t)
-						}
-						redirectDestination<-isRedirect(t)
-						if (redirectDestination!= "false"){
-							redirects[[redirectDestination]]<-c(redirects[[title]],title)
-
+						father[[title]]<- getFather(t)
+						validDestination<- strsplit(validDestination,",")
+						articlequality[[title]]<-validDestination[0]
+						type[[title]]<-validDestination[1]
+						geo[[title]]<-getGeo(t)
+					}
+					redirectDestination<-isRedirect(t)
+					if (redirectDestination!= "false")
+					{
+						redirects[[redirectDestination]]<-c(redirects[[redirectDestination]],title)
 					}
 				}
 			}
 		}
 	}
-	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects),getFathers=function() as.list(father))
+	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects),getFathers=function() as.list(father),getType=function() as.list(type),getQuality=function() as.list(articlequality),getGeo=function() as.list(geo))
 }
 
 
