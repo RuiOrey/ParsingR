@@ -36,7 +36,7 @@ categoryTest<-function(t){
 }
 
 getFather <- function(t,breakrule=F){
-	if(grepl("[iI]sPartOf",t))
+	if(grepl("[iI]s[pP]art[oO]f",t))
 	{	
 		partof<-gsub('.*[iI]s[pP]art[oO]f\\|(.*?)\\}.*', '\\1', t)
 		print(paste("PartOf:",partof))
@@ -49,9 +49,9 @@ else{
 
 getGeo <- function(t,breakrule=F){
 	geo<-"false"
-	if(grepl("\\{geo",t))
+	if(grepl("\\{[gG]eo",t))
 	{	
-		geo<-gsub('.*\\{geo\\|(.*?)\\|(.*?)[\\}\\|].*', '\\1,\\2', t)
+		geo<-gsub('.*\\{[gG]eo\\|(.*?)\\|(.*?)[\\}\\|].*', '\\1,\\2', t)
 		print(paste("Geo:",geo))
 		geo
 }
@@ -118,12 +118,14 @@ branches <- function() {
 					if (validDestination!="false" && length(transformedText)>100)
 					{
 						docs[[title]] <- transformedText
-						father[[title]]<- getFather(t)
+
 						validDestination<- strsplit(validDestination,",")
 						articlequality[[title]]<-validDestination[0]
 						type[[title]]<-validDestination[1]
-						geo[[title]]<-getGeo(t)
+						
 					}
+					father[[title]]<- getFather(t)
+					geo[[title]]<-getGeo(t)
 					redirectDestination<-isRedirect(t)
 					if (redirectDestination!= "false")
 					{
@@ -162,6 +164,11 @@ save(dtm, file='dtm.RData')
 print("Gravar ...")
 m <- as.matrix(dtm)
 rownames(m) <- names(docs)
+redirects<-b$getRedirects()
+fathers<-b$getFathers()
+type<-b$getType()
+quality<-b$getQuality()
+geo<-b$getGeo()
+save(redirects,fathers,type,quality,geo,file="destinationData.RData")
 save(m, file='m.RData')
-save.image("xmlNoHeuristics.RData")
 #write.csv(m, 'm.csv')

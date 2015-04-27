@@ -1,9 +1,10 @@
 library(shiny)
 
 shinyUI(
+
   # Application title
   fluidPage(title="Destinations",
-
+  titlePanel("Destinations data."),
     fluidRow(
       column(4,
        uiOutput("choose_dataset"),
@@ -12,6 +13,7 @@ shinyUI(
        tags$div(style="float:right; padding-right:10px; padding-top:10px; color:yellow; background-color:red; font-family:arial; font-size:20px","WAIT")),
       h2(textOutput("name")),
       h3(textOutput("type")),
+      hr(),
       h5(textOutput("quality")),
       h4("Alias"),
       h5(textOutput("alias")),
