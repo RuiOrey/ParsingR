@@ -170,7 +170,7 @@ fathers<-b$getFathers()
 type<-b$getType()
 quality<-b$getQuality()
 geo<-b$getGeo()
-doccs<-getDocs()
+doccs<-b$getDocs()
 doc_sizes<-lapply(doccs,length)
 sorted_doc_sizes<-sort(as.data.frame(doc_sizes),decreasing=T)
 
