@@ -8,7 +8,7 @@ shinyUI(fluidPage(
 	
     # Sidebar with a slider and selection inputs
     sidebarPanel(
-h6("No endpoint heuristics."),
+h6("Some heuristics comparison."),
       textInput("word", "Keyword:", "surf beach"),
       hr(),
       sliderInput("max", "Maximum cities:", min=1,  max=500, value=100)
@@ -16,7 +16,16 @@ h6("No endpoint heuristics."),
 
     # Show Word Cloud
     mainPanel(
-      plotOutput("plot")
+	h2("by score"),
+      plotOutput("plot"),	
+	h2("by score and then by document size"),
+      plotOutput("plot2"),
+	
+	h2("by score with cut heuristics, no regions"),
+      plotOutput("ploth"),
+	
+	h2("by score with cut heuristics, no regions and then by document size"),
+      plotOutput("plothd")
     )
   )
 )

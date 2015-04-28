@@ -3,10 +3,14 @@
 # source('wordsScript.R')
 
 #next two lines uncommented for 1405 destinations (more prettier version)
+load("XML1405dest.RData")
+
+keywordToDestinationWiki<-filteredWikivoyage
+
 load("XML1405destRefiltered.RData")
 load("../noheuristic/dtm.RData")
-keywordToDestinationWiki<-filteredWikivoyage
 destinationToKeywordsWiki<-reFilteredWikivoyage
+require(wordcloud)
 
 #next two lines uncommented for all destinations filtered by country, region and city but no heuristics
 #load("xmlNoHeuristics.RData")
@@ -23,7 +27,7 @@ shinyServer(function(input, output) {
 		   wordcloud_category(keywordToDestinationWiki, input$word, input$max)
 	if(input$radio == 3)
 		   {	
-			assoc<-tm::findAssocs(dtm,input$word,corlimit = 0.1)
+			assoc<-tm::findAssocs(dtm,input$word,corlimit = 0.07)
 			wordcloud(words = row.names(assoc),assoc, colors=brewer.pal(9,"BuGn"))
 			}
 	else

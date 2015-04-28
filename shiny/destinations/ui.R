@@ -4,7 +4,7 @@ shinyUI(
 
   # Application title
   fluidPage(title="Destinations",
-  titlePanel("Destinations data."),
+  titlePanel("MoonIT automatic destinations data preview"),
     fluidRow(
       column(4,
        uiOutput("choose_dataset"),
@@ -26,7 +26,7 @@ shinyUI(
         plotOutput("map")
         ),
       column(4,
-        h4("Search terms"),
+        h4("Search terms that lead to this destination"),
         plotOutput("plot"),
         h6("takes some time to load...")
         )

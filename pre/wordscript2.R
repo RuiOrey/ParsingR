@@ -86,14 +86,34 @@ isValidDestination <- function(t,breakrule=F){
 
 }
 
+testCountry<-function(text){
+	if(grepl("=[Cc]ities=",text) || grepl("=[oO]ther [dD]estinations=",text))
+		return("cut")
+	if(grepl("=[gG]o [nN]ext=",text))
+		return("no_cut")
+	"cut"
+}
+
+cutHeuristics <- function(type,text,breakrule=F){
+	if(type=="region")
+		return("cut")
+	if (type=="city")
+		return("no_cut")
+	return(testCountry(text))
+}
+
 branches <- function() {
 	docs <- new.env()  # inserir em env é ainda mais eficiente que list(), parece
+	docs_cutdown<- new.env()
 	redirects <- new.env()
 	father <- new.env()
 	type <- new.env()
 	articlequality<-new.env()
 	geo<-new.env()
+
 	pagenumber <<- 0
+	destinations_count<<-0
+	destinationsh_count<<-0
 	page <- function(node) {  # queremos ler as <page>
 		n <- xmlChildren(node)
 		pagenumber <<- pagenumber+1  # n percebo porque ele dá sempre 1
@@ -118,10 +138,20 @@ branches <- function() {
 					if (validDestination!="false" && length(transformedText)>100)
 					{
 						docs[[title]] <- transformedText
-
+						destinations_count<--destinations_count+1
 						validDestination<- strsplit(validDestination,",")
 						articlequality[[title]]<-validDestination[0]
-						type[[title]]<-validDestination[1]
+						ty<-validDestination[1]
+						type[[title]]<-ty
+						print(ty[[1]][[2]])
+						heuristicTest<-cutHeuristics(ty[[1]][[2]],t) 
+						if(heuristicTest=="no_cut"){
+							docs_cutdown[[title]]<-transformedText
+							print("ADDED TO CUT")
+							destinationsh_count<<-destinationsh_count+1
+						}
+
+	#					e "Cities" and "Other destinations" and add city-level headings like "Go next"; if such an article grows large enough, divide it into city districts.
 						
 					}
 					father[[title]]<- getFather(t)
@@ -135,7 +165,7 @@ branches <- function() {
 			}
 		}
 	}
-	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects),getFathers=function() as.list(father),getType=function() as.list(type),getQuality=function() as.list(articlequality),getGeo=function() as.list(geo))
+	list(page=page, getDocs=function() as.list(docs),getDocsHeuristic=function() as.list(docs_cutdown),getRedirects=function() as.list(redirects),getFathers=function() as.list(father),getType=function() as.list(type),getQuality=function() as.list(articlequality),getGeo=function() as.list(geo))
 }
 
 
@@ -150,21 +180,25 @@ xmlEventParse('xml', branches=b, useTagName=FALSE, addContext=FALSE, ignoreBlank
 print("A gerar a matriz de documento-termo ...")
 docs <- b$getDocs()
 corpus <- Corpus(VectorSource(docs))
+
 save(corpus, file='corpus.RData')
 
-print("Para matriz documento-termo ...")
+print("Operações sobre a matriz documento-termo ...")
 dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(2,10)))
+
 print("- Remover esparsos ...")
 dtm <- removeSparseTerms(dtm, 0.992)
-print("- Transformações da matriz ...")
+
+print("- Transformações e calculos ...")
 #dtm <- weightTfIdf(dtm)
 dtm <- weightSMART(dtm, 'ltc')
 save(dtm, file='dtm.RData')
 
-print("Gravar ...")
+print("Gravar como matriz sem heuristicas...")
 m <- as.matrix(dtm)
 rownames(m) <- names(docs)
-print("... obtendo dados de destinos...")
+
+print("... obtendo dados auxiliares de destinos...")
 redirects<-b$getRedirects()
 fathers<-b$getFathers()
 type<-b$getType()
@@ -178,4 +212,29 @@ print("..gravando dados de destinos...")
 save(sorted_doc_sizes,redirects,fathers,type,quality,geo,file="destinationData.RData")
 print("Gravar matriz final...")
 save(m, file='m.RData')
+
+rm(m,dtm,corpus)
+
+
+print("A gerar a matriz de documento-termo com heuristicas...")
+docs_heuristics=b$getDocsHeuristic()
+corpus_heuristics <- Corpus(VectorSource(docs_heuristics))
+
+save(corpus_heuristics, file='corpus_heuristics.RData')
+
+print("Operações sobre a matriz documento-termo ...")
+dtm_heuristics <- DocumentTermMatrix(corpus_heuristics, control=list(wordLengths=c(2,10)))
+print("- Remover esparsos ...")
+dtm_heuristics <- removeSparseTerms(dtm_heuristics, 0.99)
+print("- Transformações e calculos ...")
+dtm_heuristics <- weightSMART(dtm_heuristics, 'ltc')
+save(dtm_heuristics, file='dtm_heuristics.RData')
+
+print("Converter para matriz com heuristicas...")
+m_heuristics <- as.matrix(dtm_heuristics)
+
+rownames(m_heuristics) <- names(docs_heuristics)
+print("Gravar matriz final heuristicas...")
+save(m_heuristics, file='m_heuristics.RData')
+
 #write.csv(m, 'm.csv')

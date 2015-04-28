@@ -71,14 +71,22 @@ shinyServer(function(input, output) {
     path<-input$destination
     actual_destination<-input$destination
     while(iteration){
-      if (!is.null(fathers[actual_destination][[1]]))
+      if (!is.null(fathers[actual_destination][[1]]) && fathers[actual_destination][[1]] != "false")
       {
         path<-paste(path, "<", fathers[actual_destination][[1]])
         actual_destination<-fathers[actual_destination][[1]]
       }
-      else
-      iteration<-F
-    }
+      else{
+	actual_destination<-gsub("_", " ", actual_destination)
+	     	if (!is.null(fathers[actual_destination][[1]]) != "false")
+		      {
+			path<-paste(path, "<", fathers[actual_destination][[1]])
+			actual_destination<-fathers[actual_destination][[1]]
+		      }
+		else
+      			iteration<-F
+    		}
+}
     path
     })
   output$cordinates<-renderText({
