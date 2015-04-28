@@ -87,55 +87,50 @@ isValidDestination <- function(t,breakrule=F){
 }
 
 branches <- function() {
-	docs <- new.env()  # inserir em env é ainda mais eficiente que list(), parece
-	redirects <- new.env()
-	father <- new.env()
-	type <- new.env()
-	articlequality<-new.env()
-	geo<-new.env()
+	docs <- new.env()
+	docs$text <- list()
+	docs$redirects <- list()
+	docs$father <- list()
+	docs$type <- list()
+	docs$quality <- list()
+	docs$geo <- list()
+
 	pagenumber <<- 0
 	page <- function(node) {  # queremos ler as <page>
 		n <- xmlChildren(node)
-		pagenumber <<- pagenumber+1  # n percebo porque ele dá sempre 1
+		pagenumber <<- pagenumber+1
 		if(all(c('title','revision') %in% names(n))) {
 			title <- xmlValue(n[['title']])
 			if(!grepl(':', title)) {
-				revision <- n[['revision']]
-				n <- xmlChildren(revision)
+				n <- xmlChildren(n[['revision']])
 								
 				if('text' %in% names(n)) {
-
 					print(pagenumber)
 					print(title)
+
 					# o parser repete chaves "text", dai temos que juntá-las
 					t <- paste(sapply(n[names(n) == 'text'], xmlValue), collapse=' ')
-					transformedText <-transform_text(t)
-					#print(transformedText)
+					tt <- transform_text(t)
+
 					validDestination<-isValidDestination(substitute(t))
 
-					# FIXME: acho que o Rui verificava que o texto tinha um certo
-					# tamanho. ie: length(t)>100
-					if (validDestination!="false" && length(transformedText)>100)
-					{
-						docs[[title]] <- transformedText
+					if (validDestination!="false" && length(tt)>100) {
+						docs$text[title] <- tt
 
-						validDestination<- strsplit(validDestination,",")
-						articlequality[[title]]<-validDestination[0]
-						type[[title]]<-validDestination[1]
-						
+						validDestination <- strsplit(validDestination,",")
+						docs$quality[[title]] <- validDestination[0]
+						docs$type[[title]] <- validDestination[1]
 					}
-					father[[title]]<- getFather(t)
-					geo[[title]]<-getGeo(t)
+					docs$father[[title]]<- getFather(t)
+					docs$geo[[title]]<-getGeo(t)
 					redirectDestination<-isRedirect(t)
 					if (redirectDestination!= "false")
-					{
-						redirects[[redirectDestination]]<-c(redirects[[redirectDestination]],title)
-					}
+						docs$redirects[redirectDestination] <- c(docs$redirects[[redirectDestination]],title)
 				}
 			}
 		}
 	}
-	list(page=page, getDocs=function() as.list(docs),getRedirects=function() as.list(redirects),getFathers=function() as.list(father),getType=function() as.list(type),getQuality=function() as.list(articlequality),getGeo=function() as.list(geo))
+	list(page=page, getDocs=function() as.list(docs))
 }
 
 
@@ -148,8 +143,8 @@ xmlEventParse('xml', branches=b, useTagName=FALSE, addContext=FALSE, ignoreBlank
 ####################
 
 print("A gerar a matriz de documento-termo ...")
-docs <- b$getDocs()
-corpus <- Corpus(VectorSource(docs))
+d <- b$getDocs()
+corpus <- Corpus(VectorSource(d$text))
 save(corpus, file='corpus.RData')
 
 print("Para matriz documento-termo ...")
@@ -161,21 +156,15 @@ print("- Transformações da matriz ...")
 dtm <- weightSMART(dtm, 'ltc')
 save(dtm, file='dtm.RData')
 
-print("Gravar ...")
-m <- as.matrix(dtm)
-rownames(m) <- names(docs)
+#print("Gravar ...")
+#m <- as.matrix(dtm)
+#rownames(m) <- names(docs)
+#save(m, file='m.RData')
+#write.csv(m, 'm.csv')
+
 print("... obtendo dados de destinos...")
-redirects<-b$getRedirects()
-fathers<-b$getFathers()
-type<-b$getType()
-quality<-b$getQuality()
-geo<-b$getGeo()
-doccs<-b$getDocs()
-doc_sizes<-lapply(doccs,length)
-sorted_doc_sizes<-sort(as.data.frame(doc_sizes),decreasing=T)
+sorted_doc_sizes <- sort(as.data.frame(lapply(docs$text,length)), TRUE)
 
 print("..gravando dados de destinos...")
-save(sorted_doc_sizes,redirects,fathers,type,quality,geo,file="destinationData.RData")
+save(sorted_doc_sizes,d$redirects,d$fathers,d$type,d$quality,d$geo,file="destinationData.RData")
 print("Gravar matriz final...")
-save(m, file='m.RData')
-#write.csv(m, 'm.csv')
