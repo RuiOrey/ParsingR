@@ -184,17 +184,12 @@ corpus <- Corpus(VectorSource(docs))
 save(corpus, file='corpus.RData')
 
 print("Operações sobre a matriz documento-termo ...")
-dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(2,10)))
+dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(2,15)))
 
 print("- Remover esparsos ...")
-<<<<<<< HEAD
 dtm <- removeSparseTerms(dtm, 0.992)
 
 print("- Transformações e calculos ...")
-=======
-dtm <- removeSparseTerms(dtm, 0.995)
-print("- Transformações da matriz ...")
->>>>>>> e4615f77fad16ad3a8f6a66830bc43e98aa772ad
 #dtm <- weightTfIdf(dtm)
 dtm <- weightSMART(dtm, 'ltc')
 save(dtm, file='dtm.RData')
@@ -202,19 +197,36 @@ save(dtm, file='dtm.RData')
 print("Gravar como matriz sem heuristicas...")
 m <- as.matrix(dtm)
 rownames(m) <- names(docs)
-<<<<<<< HEAD
 
 print("... obtendo dados auxiliares de destinos...")
-=======
->>>>>>> e4615f77fad16ad3a8f6a66830bc43e98aa772ad
 redirects<-b$getRedirects()
 fathers<-b$getFathers()
-type<-b$getType
-quality<-b$getQuality
-geo<-b$getGeo
-save(redirects,fathers,type,quality,geo,file="destinationData.RData")
+type<-b$getType()
+quality<-b$getQuality()
+geo<-b$getGeo()
+doccs<-b$getDocs()
+doc_sizes<-lapply(doccs,length)
+sorted_doc_sizes<-sort(as.data.frame(doc_sizes),decreasing=T)
+
+print("..gravando dados de destinos...")
+save(sorted_doc_sizes,redirects,fathers,type,quality,geo,file="destinationData.RData")
+print("Gravar matriz final...")
 save(m, file='m.RData')
-<<<<<<< HEAD
+
+
+print ("Gerando lista de termos correlacionados..")
+adjacent_terms<-llply(dtm$dimnames$Terms, function(i) findAssocs(dtm, i, 0.07), .progress = "text" )
+save(adjacent_terms,"adjacent_terms.RData")
+
+
+print("Exportando para csv..")
+write.csv(m, 'm.csv')
+write.csv(redirects, 'redirects.csv')
+write.csv(fathers, 'fathers.csv')
+write.csv(type, 'type.csv')
+write.csv(quality, 'quality.csv')
+write.csv(geo, 'geo.csv')
+write.csv(adjacent_terms, 'adjacent_terms.csv')
 
 rm(m,dtm,corpus)
 
@@ -240,12 +252,6 @@ rownames(m_heuristics) <- names(docs_heuristics)
 print("Gravar matriz final heuristicas...")
 save(m_heuristics, file='m_heuristics.RData')
 
+
+
 #write.csv(m, 'm.csv')
-=======
-write.csv(m, 'm.csv')
-write.csv(redirects, 'redirects.csv')
-write.csv(fathers, 'fathers.csv')
-write.csv(type, 'type.csv')
-write.csv(quality, 'quality.csv')
-write.csv(geo, 'geo.csv')
->>>>>>> e4615f77fad16ad3a8f6a66830bc43e98aa772ad
