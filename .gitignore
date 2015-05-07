@@ -12,7 +12,8 @@
 vignettes/*.html
 vignettes/*.pdf
 
-.xml
+*.xml
+*.rdata
 
 # ignora download de ficheiros:
 pre/xml
