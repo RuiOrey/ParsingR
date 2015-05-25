@@ -5,8 +5,10 @@ $csv_dir="./adjacent_terms/";
 $files = array();
 $lines = array();
 $newlin="";
+$id=0;
 foreach (glob($csv_dir."*.csv") as $filename) {
     // Open the file
+    
     if( $handle = @fopen( $filename, "r") )
     {
         $x = 0; // Start the line counter
@@ -20,10 +22,10 @@ foreach (glob($csv_dir."*.csv") as $filename) {
         	$line = fgets($handle); // Read the line
             $lessons[$filename][] = $line;            
  
-        	if ($x!=0)
+        	if ($x!=0 && (! feof( $handle) ) )
         	{
-        	$newEntry.="\"".basename($filename,".csv")."\"".",".$line;
-            
+	        	$newEntry.=$id.",\"".basename($filename,".csv")."\"".",".$line;
+	            $id++;
 			}
             $x++; // Increase the counter
 		}
