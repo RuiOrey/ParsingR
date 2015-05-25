@@ -30,7 +30,7 @@ categoryTest<-function(t){
 		typequality0[which(la)]
 	}
 	else{
-		"not_valid_category"
+		"false"
 	}
 
 }
@@ -135,8 +135,7 @@ branches <- function() {
 
 					# FIXME: acho que o Rui verificava que o texto tinha um certo
 					# tamanho. ie: length(t)>100
-					leng<-length(transformedText)
-					if (validDestination!="false" && leng>100)
+					if (validDestination!="false" && length(transformedText)>100)
 					{
 						docs[[title]] <- transformedText
 						destinations_count<--destinations_count+1
@@ -151,16 +150,10 @@ branches <- function() {
 							print("ADDED TO CUT")
 							destinationsh_count<<-destinationsh_count+1
 						}
-						else{
-							validDestination<-"heuristicTest"
-						}
 
 	#					e "Cities" and "Other destinations" and add city-level headings like "Go next"; if such an article grows large enough, divide it into city districts.
 						
 					}
-					if (validDestination!="false" && leng<100)
-						validDestination<-"small"
-
 					father[[title]]<- getFather(t)
 					geo[[title]]<-getGeo(t)
 					redirectDestination<-isRedirect(t)
